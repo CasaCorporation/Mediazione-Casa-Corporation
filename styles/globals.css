@@ -1,0 +1,137 @@
+/* Tailwind v4 */
+@import "tailwindcss";
+
+/* === Theme tokens === */
+@theme {
+  --color-brand: #1D2D5E;
+  --color-brand-dark: #0A1024;
+  --color-gold: #C9A86E;
+  --color-gold-soft: #B89458;
+  --shadow-gold: 0 10px 30px -12px rgb(201 168 110 / 0.45);
+}
+
+/* === Vars unificate === */
+:root{
+  /* palette */
+  --brand:#1D2D5E;
+  --brand-dark:#0A1024;
+  --gold:#C9A86E;
+  --gold-400:#E7D2A4;
+
+  /* alias/compat */
+  --blue: var(--brand);
+
+  /* page theme (di default dark) */
+  --page-bg: var(--brand-dark);
+  --page-text: #ffffff;
+
+  /* vetro */
+  --glass-bg: rgba(255,255,255,0.05);
+  --glass-stroke: rgba(255,255,255,0.10);
+  --glass-stroke-strong: rgba(255,255,255,0.16);
+
+  /* font stack (derivano da next/font in _document) */
+  --ff-sans: var(--font-inter), system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  --ff-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  /* Fallback altezza header */
+  --header-h: 56px;
+
+  /* === Hero metrics unificate === */
+  --hero-pt: clamp(5.5rem, 7vw, 7rem);
+  --hero-pb: clamp(2.5rem, 4vw, 3.5rem);
+  --hero-media-w: clamp(320px, 44vw, 620px);
+  --hero-media-h: clamp(320px, 38vw, 560px);
+  --hero-media-top: -24px;
+}
+
+/* Temi applicabili al wrapper pagina (es. <main class="theme-light">) */
+.theme-dark{
+  --page-bg: var(--brand-dark);
+  --page-text: #ffffff;
+}
+.theme-light{
+  --page-bg: #ffffff;
+  --page-text: #0b1023;
+}
+
+/* Base layout: niente smooth globale (rompe i pin) */
+html, body, #__next {
+  min-height: 100%;
+  background: var(--page-bg);
+  color: var(--page-text);
+}
+/* Niente barra orizzontale globale */
+html, body { overflow-x: clip; }
+
+body { font-family: var(--ff-sans); }
+.h-serif { font-family: var(--ff-serif); }
+
+/* Selection in oro (leggera) */
+::selection {
+  background: color-mix(in oklab, var(--gold) 26%, transparent);
+}
+
+/* Reset media soft */
+img, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+}
+video { height: auto; }
+
+/* Utility */
+.glass { @apply bg-white/5 backdrop-blur border border-white/10; }
+.section { @apply py-20 sm:py-28; }
+.container { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+
+/* Spotlight per hero */
+.mask-soft {
+  -webkit-mask-image: radial-gradient(260px 260px at var(--x) var(--y), black 0%, transparent 60%);
+  mask-image: radial-gradient(260px 260px at var(--x) var(--y), black 0%, transparent 60%);
+}
+
+/* Accenti oro */
+.gold-acc {
+  position: relative;
+  border: 1px solid var(--glass-stroke);
+  background: var(--glass-bg);
+}
+.gold-acc::after {
+  content:"";
+  pointer-events:none;
+  position:absolute; inset:-1px;
+  border-radius:inherit;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity:.0; transition:opacity .25s ease;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  padding:1px;
+}
+.gold-acc:hover::after { opacity:.55; }
+
+/* Scrollbar utility (mobile) */
+.scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+/* === Hero media mobile (spostato qui per centralizzare) === */
+.hero-mobile-media{
+  aspect-ratio: 100 / 46; /* come prima */
+  max-height: 320px;
+}
+@media (orientation: landscape) and (max-width: 768px){
+  .hero-mobile-media{
+    aspect-ratio: 100 / 40;
+    max-height: 280px;
+  }
+}
+
+/* Plugin Tailwind v4 (se usi le utility) */
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/aspect-ratio";
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

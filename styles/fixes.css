@@ -1,0 +1,28 @@
+/* --- Fixes/utility globali minime --- */
+
+/* Evita conflitti con Lenis/GSAP: niente smooth globale */
+html { scroll-behavior: auto !important; }
+
+/* Z-index sicuro per LocalNav sticky sopra ai contenuti */
+.localnav-on-top { z-index: 30; }
+
+/* Helper per sezioni con anchor: scroll-margin coerente (mobile/desktop) */
+.section-anchor {
+  scroll-margin-top: calc(var(--header-h, 56px) + 64px);
+}
+@media (min-width: 768px) {
+  .section-anchor {
+    scroll-margin-top: calc(var(--header-h, 56px) + 72px);
+  }
+}
+
+/* Reveal fallback (se qualche componente doc usa classi senza wrapper) */
+.inview-ready {
+  opacity: 0;
+  transform: translateY(4px);
+}
+.inview-ready.inview {
+  opacity: 1;
+  transform: none;
+  transition: opacity .6s ease, transform .6s ease;
+}

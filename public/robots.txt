@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.casacorporation.it
+
+# Sitemaps
+Sitemap: https://www.casacorporation.it/sitemap.xml

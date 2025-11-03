@@ -1,0 +1,145 @@
+/* === Buttons ultra effects (global) === */
+
+/* Glow magnetico che segue il mouse */
+.btn-glow::after{
+  content:"";
+  position:absolute; inset:-2px;
+  border-radius:inherit;
+  pointer-events:none;
+  background:
+    radial-gradient(140px 140px at var(--mx,-1000px) var(--my,-1000px),
+      rgba(255,255,255,.16), transparent 60%);
+  opacity:0; transition:opacity .25s ease;
+}
+.btn-glow:hover::after{ opacity:.8; }
+
+/* Bordo conico animato (per glass/outline) */
+.btn-conic::before{
+  content:"";
+  position:absolute; inset:0; padding:1px; border-radius:inherit;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    rgba(201,168,110,.65),
+    rgba(29,45,94,.45),
+    rgba(201,168,110,.65)
+  );
+
+  /* ✅ aggiungi anche la proprietà standard */
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+
+  /* mix di compositing per Safari e standard */
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  opacity: 0;                     /* prima era .0 */
+  transition: opacity .35s ease;
+  pointer-events:none;
+  animation: btn-conic-spin 7s linear infinite;
+}
+
+.btn-conic:hover::before{ opacity:.5; }
+@keyframes btn-conic-spin { to { transform: rotate(360deg); } }
+
+/* Shine diagonale (usato dal Gold) – gestito dal ::before del componente */
+.btn-shine::before{
+  content:"";
+  position:absolute; inset:0; border-radius:inherit;
+  background: linear-gradient(
+    120deg, transparent 10%,
+    rgba(255,255,255,.6) 45%,
+    transparent 62%
+  );
+  transform: translateX(-40%);
+  opacity:0; transition: transform .6s ease, opacity .4s ease;
+  pointer-events:none;
+}
+.btn-shine:hover::before{ transform: translateX(22%); opacity:1; }
+
+/* Gradient shift (per il Gradient) */
+.btn-grad { background-size: 200% 100%; transition: background-position .45s ease, filter .2s ease; }
+.btn-grad:hover { background-position: 100% 0%; filter: brightness(1.06); }
+
+/* Ripple on click (inserito via DOM dal ButtonBase/Icon) */
+.btn-ripple{
+  position:absolute; width:12px; height:12px;
+  border-radius:9999px; pointer-events:none;
+  background: currentColor; opacity:.24;
+  transform: translate(-50%,-50%) scale(1);
+  animation: btn-ripple .6s ease-out forwards;
+}
+@keyframes btn-ripple{
+  from { opacity:.24; transform: translate(-50%,-50%) scale(1); }
+  to   { opacity:0;   transform: translate(-50%,-50%) scale(24); }
+}
+
+/* Motion safe: se l’utente riduce i motion, disattiva transizioni “forti” */
+@media (prefers-reduced-motion: reduce){
+  .btn-glow::after, .btn-conic::before, .btn-shine::before { display:none; }
+}
+
+/* === Text buttons (link-like) === */
+.btn-text{
+  display:inline-flex; align-items:center; gap:.375rem;
+  font-weight:600; position:relative; line-height:1.2;
+  transition: color .22s ease, transform .18s ease;
+}
+
+/* underline animato */
+.txt-underline{
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  padding-bottom: 2px;
+  transition: background-size .28s ease;
+}
+.txt-underline:hover{ background-size: 100% 2px; }
+
+/* freccia che scorre */
+.btn-text .icon{
+  transform: translateX(0);
+  transition: transform .22s ease, opacity .22s ease;
+  opacity:.9;
+}
+.btn-text:hover .icon{ transform: translateX(3px); opacity:1; }
+
+/* glow testuale soft al passaggio */
+.txt-glow:hover{
+  text-shadow: 0 0 14px color-mix(in oklab, currentColor 40%, transparent);
+}
+
+/* sizes */
+.btn-text-sm{ font-size:.875rem; }
+.btn-text-md{ font-size:.95rem; }
+.btn-text-lg{ font-size:1.05rem; }
+
+/* === Icon buttons extras === */
+.icon-ring{
+  box-shadow: 0 0 0 1px var(--glass-stroke);
+}
+.icon-halo::after{
+  content:"";
+  position:absolute; inset:-8px; border-radius:inherit; pointer-events:none;
+  background:
+    radial-gradient(120px 120px at 50% 50%, color-mix(in oklab, var(--gold) 45%, transparent), transparent 60%),
+    radial-gradient(200px 200px at 50% 50%, color-mix(in oklab, var(--brand) 35%, transparent), transparent 70%);
+  filter: blur(16px);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.icon-halo:hover::after{ opacity:.55; }
+
+.icon-pulse:hover{
+  animation: icon-pulse 900ms ease-out;
+}
+@keyframes icon-pulse{
+  0% { transform: scale(1); }
+  45% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+/* Motion safe */
+@media (prefers-reduced-motion: reduce){
+  .icon-halo::after, .icon-pulse:hover { animation: none !important; opacity: 0 !important; }
+}
