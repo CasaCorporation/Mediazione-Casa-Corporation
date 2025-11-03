@@ -81,10 +81,10 @@ export function HeroCopyMobile({
       </motion.div>
 
       {/* titolo */}
-      <motion.h1
-        variants={fx.item}
-        className="mt-1.5 text-[clamp(26px,7.4vw,36px)] font-extrabold leading-[1.15] tracking-tight"
-      >
+    + <motion.h1
+   variants={fx.item}
+   className="mt-1.5 text-[clamp(26px,7.4vw,36px)] font-extrabold leading-[1.15] tracking-tight text-[rgba(10,16,36,1)]"
+ >
         {titlePre}{" "}
         <GoldenText>{titleHighlight}</GoldenText>{" "}
         {titlePost}
@@ -159,9 +159,9 @@ export function HeroCopyDesktop({
 
         {/* titolo */}
         <motion.h1
-          variants={fx.item}
-          className="title-balance font-extrabold tracking-tight leading-[1.15] text-[clamp(24px,7vw,36px)] sm:text-[40px] md:text-6xl max-w-[28ch] sm:max-w-none pr-1"
-        >
+  variants={fx.item}
+   className="title-balance font-extrabold tracking-tight leading-[1.15] text-[clamp(24px,7vw,36px)] sm:text-[40px] md:text-6xl max-w-[28ch] sm:max-w-none pr-1 text-[rgba(10,16,36,1)]"
+ >
           {titlePre}{" "}
           <GoldenText>{titleHighlight}</GoldenText>
           <br className="hidden md:block" /> {titlePost}
