@@ -135,3 +135,37 @@ video { height: auto; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* === PALETTE INVERTITA (blu → bianco, testo scuro) === */
+/* Attiva con: <html data-theme="invert"> */
+:root[data-theme="invert"]{
+  /* mapping chiave: il blu diventa bianco (con scale morbide) */
+  --brand: #ffffff;           /* prima: #1D2D5E */
+  --brand-dark: #F6F7FB;      /* prima: #0A1024 (sfondo scuro → very light) */
+
+  /* page theme */
+  --page-bg: var(--brand);    /* fondo principale → bianco */
+  --page-text: #0A1024;       /* testo scuro per contrasto */
+
+  /* vetro su light: bordi e bg più “scuri” e sottili */
+  --glass-bg: rgba(10,16,36,0.04);
+  --glass-stroke: rgba(10,16,36,0.10);
+  --glass-stroke-strong: rgba(10,16,36,0.16);
+
+  /* accenti oro invariati (funzionano sia su dark che su light) */
+  /* --gold e --gold-soft restano uguali */
+
+  /* helper per effetti/ombre che prima si basavano sul blu */
+  --halo-base: var(--page-text);                 /* usata dagli halo al posto del brand */
+  --brand-conic: rgba(10,16,36,0.28);            /* traccia scura per gradient conici */
+  --brand-soft-tint: #EEF1F7;                    /* “bianco azzurrato” per pannelli */
+}
+
+/* Alias utili (di default in dark) */
+:root{
+  --halo-base: var(--brand);
+  --brand-conic: color-mix(in oklab, var(--brand) 60%, transparent);
+  --brand-soft-tint: #0f152e; /* non usata in dark, resta segnaposto */
+}
+
+/* Base layout già legge --page-bg/--page-text. Non serve altro. */
