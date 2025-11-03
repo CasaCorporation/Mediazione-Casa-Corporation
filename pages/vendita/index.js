@@ -30,6 +30,13 @@ export default function ConfrontoPage() {
     { id: "cta", label: "Candidati" },
   ];
 
+  // palette locali SOLO per questa pagina (niente css globali)
+  const INK = "rgba(10,16,36,1)"; // blu scurissimo testo
+  const INK_16 = "rgba(10,16,36,.16)";
+  const INK_06 = "rgba(10,16,36,.06)";
+  const WHITE = "#FFFFFF";
+  const WHITE_SOFT = "#F6F7FB"; // “bianco scuro” per alternanza
+
   return (
     <>
       {/* SEO dedicato (title, description, og, ecc.) */}
@@ -40,7 +47,8 @@ export default function ConfrontoPage() {
         <link rel="canonical" href={canonical} />
       </Head>
 
-      <main className="confronto min-h-screen text-white">
+      {/* testo ink permanente qui */}
+      <main className="confronto min-h-screen" style={{ color: INK, backgroundColor: WHITE }}>
         <Header />
 
         {/* Spacer per Header fixed */}
@@ -54,38 +62,38 @@ export default function ConfrontoPage() {
           <HeroConfronto />
         </section>
 
-        {/* LOCAL NAV sticky, colori coerenti */}
+        {/* LOCAL NAV sticky — tema chiaro */}
         <LocalNav
           items={NAV_ITEMS}
           topOffset="var(--header-h, 56px)"
           theme={{
-            bg: "color-mix(in oklab, var(--brand) 88%, black)",
+            bg: `linear-gradient(180deg, ${WHITE} 0%, ${WHITE_SOFT} 100%)`,
             accent: "var(--gold)",
-            ring: "rgba(255,255,255,.16)",
+            ring: INK_16, // sostituisce i ring white
           }}
         />
 
-        {/* ===== CONTENUTI con alternanza sfondi brand ===== */}
-        <Band tone="blue">
+        {/* ===== CONTENUTI con alternanza tra due bianchi ===== */}
+        <Band tone="light-soft" ink={INK} whiteSoft={WHITE_SOFT} white={WHITE} ink06={INK_06}>
           <section id="modelli">
             <ModelCards />
           </section>
         </Band>
 
-        <Band tone="dark">
+        <Band tone="light" ink={INK} whiteSoft={WHITE_SOFT} white={WHITE} ink06={INK_06}>
           <section id="tabella">
             <ComparisonTable />
           </section>
         </Band>
 
-        <Band tone="blue">
+        <Band tone="light-soft" ink={INK} whiteSoft={WHITE_SOFT} white={WHITE} ink06={INK_06}>
           <section id="spiegazioni">
             <Explainer />
           </section>
         </Band>
 
         {/* CTA finale (ancora #cta) */}
-        <Band tone="blue">
+        <Band tone="light-soft" ink={INK} whiteSoft={WHITE_SOFT} white={WHITE} ink06={INK_06}>
           <section id="cta">
             <CTAUltra
               title="Vuoi numeri chiari sul tuo caso?"
@@ -97,7 +105,7 @@ export default function ConfrontoPage() {
         </Band>
 
         {/* Swiper pagina Confronto */}
-        <Band tone="dark">
+        <Band tone="light" ink={INK} whiteSoft={WHITE_SOFT} white={WHITE} ink06={INK_06}>
           <SwiperConfronto />
         </Band>
 
@@ -122,27 +130,43 @@ export default function ConfrontoPage() {
   );
 }
 
-/* ===== Wrapper "Band" per alternare sfondi tra i due blu del brand ===== */
-function Band({ tone = "dark", children }) {
-  const cls = tone === "blue" ? "band band-blue" : "band band-dark";
+/* ===== Wrapper "Band" per alternare i due bianchi (visivamente diversi) =====
+   tone="light"       → bianco pieno
+   tone="light-soft"  → bianco "scuro" (soft) */
+function Band({ tone = "light", children, ink = "rgba(10,16,36,1)", whiteSoft = "#F6F7FB", white = "#FFFFFF", ink06 = "rgba(10,16,36,.06)" }) {
+  const isSoft = tone === "light-soft";
+  const cls = "band";
   return (
     <div className={cls}>
       {children}
       <style jsx>{`
         .band {
           position: relative;
+          /* separazione visiva fra blocchi */
+          padding-top: 0.01px; /* anti-collasso */
         }
-        .band-dark {
+        /* “Bianco scuro” con un leggero bagliore gold (molto soft) */
+        .band {
           background:
-            radial-gradient(40% 26% at 50% 0%, rgba(201, 168, 110, 0.1), transparent 62%),
-            var(--brand-dark);
-        }
-        .band-blue {
-          background:
-            radial-gradient(40% 26% at 50% 0%, rgba(29, 45, 94, 0.34), transparent 62%),
-            var(--brand);
+            radial-gradient(40% 26% at 50% 0%, rgba(201,168,110,0.08), transparent 62%),
+            ${isSoft ? whiteSoft : white};
         }
       `}</style>
+
+      {/* velo “ink” leggerissimo solo per la variante white pieno (ex “blue”) */}
+      {!isSoft && (
+        <div
+          aria-hidden
+          className="pointer-events-none"
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              // sostituisce l’ex “alone” blu con un’ombra appena percettibile
+              `radial-gradient(40% 26% at 50% 0%, ${ink06}, transparent 62%)`,
+          }}
+        />
+      )}
     </div>
   );
 }
