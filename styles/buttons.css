@@ -17,13 +17,12 @@
 .btn-conic::before{
   content:"";
   position:absolute; inset:0; padding:1px; border-radius:inherit;
- background: conic-gradient(
-  from 180deg at 50% 50%,
-  color-mix(in oklab, var(--gold) 65%, transparent),
-  var(--brand-conic),
-  color-mix(in oklab, var(--gold) 65%, transparent)
-);
-
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    rgba(201,168,110,.65),
+    rgba(29,45,94,.45),
+    rgba(201,168,110,.65)
+  );
 
   /* ✅ aggiungi anche la proprietà standard */
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -124,7 +123,7 @@
   position:absolute; inset:-8px; border-radius:inherit; pointer-events:none;
   background:
     radial-gradient(120px 120px at 50% 50%, color-mix(in oklab, var(--gold) 45%, transparent), transparent 60%),
-    radial-gradient(200px 200px at 50% 50%, color-mix(in oklab, var(--halo-base) 35%, transparent), transparent 70%);
+    radial-gradient(200px 200px at 50% 50%, color-mix(in oklab, var(--brand) 35%, transparent), transparent 70%);
   filter: blur(16px);
   opacity: 0;
   transition: opacity .25s ease;
