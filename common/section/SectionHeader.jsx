@@ -6,21 +6,19 @@ import { motion } from "framer-motion";
  * SectionHeader v9 — "Pure"
  * - SOLO il titolo è centrato.
  * - Sotto: underline semplice (gold→brand) con micro-pan opzionale.
- * - Niente halo, niente rombi, niente separatori.
  * - <em> nel titolo = highlight oro (bg-clip).
- *
- * Include <SectionP> per tipografia coerente dei paragrafi (senza imporre layout).
+ * - Colore titolo: ora blu scuro (#0A1024) invece che bianco.
  */
 
 export default function SectionHeader({
   id,
-  title,               // string | ReactNode (puoi usare <em> per accent)
+  title,               // string | ReactNode
   as: As = "h2",
   size = "lg",         // "sm" | "md" | "lg"
   tone = "dark",       // "dark" | "light"
-  underline = true,    // mostra la barra sotto
-  animate = true,      // micro-pan della barra
-  className = "",      // es. "mb-10"
+  underline = true,
+  animate = true,
+  className = "",
 }) {
   const titleSize =
     size === "lg"
@@ -29,9 +27,15 @@ export default function SectionHeader({
       ? "text-[clamp(20px,2.0vw,28px)]"
       : "text-[clamp(18px,1.7vw,22px)]";
 
-  const barWidth = size === "lg" ? 96 : size === "md" ? 76 : 56; // px
-  const barHeight = 2; // px minimal
-  const titleColor = tone === "light" ? "text-[var(--brand-dark)]" : "text-white";
+  const barWidth = size === "lg" ? 96 : size === "md" ? 76 : 56;
+  const barHeight = 2;
+
+  // 👇 qui cambia: usiamo blu scuro come colore titolo (invece del bianco)
+  const titleColor =
+    tone === "light"
+      ? "text-[var(--brand-dark)]"
+      : "text-[rgba(10,16,36,1)]"; // ex: text-white
+
   const barGrad =
     tone === "light"
       ? "linear-gradient(90deg, var(--gold), color-mix(in oklab, var(--brand-dark) 70%, var(--gold) 30%))"
@@ -106,8 +110,8 @@ export default function SectionHeader({
 
 export function SectionP({
   as: As = "p",
-  tone = "dark",        // "dark" | "light"
-  size = "md",          // "sm" | "md" | "lg"
+  tone = "dark",
+  size = "md",
   className = "",
   children,
 }) {
@@ -118,10 +122,11 @@ export function SectionP({
       ? "text-[13.5px] sm:text-[15px]"
       : "text-[13px]";
 
+  // anche i paragrafi "dark" ora blu scuro per coerenza
   const color =
     tone === "light"
       ? "text-[color-mix(in oklab, var(--brand-dark) 82%, white 18%)]"
-      : "text-[color-mix(in oklab, white 80%, black 20%)]";
+      : "text-[rgba(10,16,36,0.85)]";
 
   return (
     <As
