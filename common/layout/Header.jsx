@@ -62,71 +62,82 @@ export default function Header() {
             : "bg-[rgba(8,12,25,0.45)] backdrop-blur-sm border-white/10"
         )}
       >
-        <div className="container flex h-14 items-center justify-between">
-          {/* Logo + brand */}
-          <div className="flex items-center gap-3">
-            <Link href="/" aria-label="Home — Mediazione Casa Corporation" className="group flex items-center">
-              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl transition-transform duration-300 group-hover:scale-[1.06] active:scale-[0.98] ring-1 ring-[var(--gold)]/40">
-                <Image src="/favicon.svg" alt="Casa Corporation" fill className="object-contain p-1" priority sizes="44px" />
+        {/* Barra alta full-bleed: LOGO fuori container */}
+        <div className="flex h-14 items-center justify-between">
+          {/* LOGO full-bleed (no container) */}
+          <div className="pl-4 sm:pl-5 lg:pl-6">
+            <Link href="/" aria-label="Home — Mediazione Casa Corporation" className="group flex items-center gap-3">
+              <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl ring-1 ring-[var(--gold)]/40 transition-transform duration-300 group-hover:scale-[1.06] active:scale-[0.98]">
+                <Image
+                  src="/favicon.svg"
+                  alt="Casa Corporation"
+                  fill
+                  className="object-contain p-1"
+                  priority
+                  sizes="44px"
+                />
               </div>
-            </Link>
-            <Link
-              href="/"
-              aria-label="Home — Mediazione Casa Corporation"
-              className="hidden text-sm font-semibold sm:inline focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
-            >
-              <span className="text-white">Mediazione</span>{" "}
-              <span className="text-gold">Casa Corporation</span>
+              <span className="hidden text-sm font-semibold text-white sm:inline">
+                <span className="text-white">Mediazione</span>{" "}
+                <span className="text-gold">Casa Corporation</span>
+              </span>
             </Link>
           </div>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-            {NAV.map((item) => {
-              const active = isActive(pathname, item);
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={clsx(
-                    "relative rounded-xl px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40",
-                    active ? "text-gold" : "text-white/80 hover:text-white"
-                  )}
+          {/* NAV dentro container, allineata a destra */}
+          <div className="flex-1">
+            <div className="container">
+              <div className="flex items-center justify-end gap-1 xl:gap-2">
+                {/* Desktop Nav */}
+                <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+                  {NAV.map((item) => {
+                    const active = isActive(pathname, item);
+                    return (
+                      <Link
+                        key={item.label}
+                        href={item.href}
+                        className={clsx(
+                          "relative rounded-xl px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40",
+                          active ? "text-gold" : "text-white/80 hover:text-white"
+                        )}
+                      >
+                        {item.label}
+                        {active && <span className="absolute inset-x-2 -bottom-1 block h-[2px] rounded bg-[var(--gold)]" />}
+                      </Link>
+                    );
+                  })}
+
+                  {/* CTA: Percorso guidato */}
+                  <Link
+                    href="/percorso-guidato"
+                    className="ml-1 rounded-xl border border-gold/30 bg-gold/20 px-3 py-1.5 text-sm text-gold shadow-[var(--shadow-gold)] transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
+                  >
+                    Percorso guidato
+                  </Link>
+
+                  {/* Area Venditore — NON linkata */}
+                  <span
+                    aria-disabled="true"
+                    title="In arrivo"
+                    className="rounded-xl border border-white/15 px-3 py-1.5 text-xs text-white/85 select-none cursor-not-allowed"
+                  >
+                    Area Venditore
+                  </span>
+                </nav>
+
+                {/* Mobile toggler */}
+                <button
+                  onClick={() => setMobileOpen((o) => !o)}
+                  aria-label="Apri menu"
+                  aria-expanded={mobileOpen}
+                  aria-controls="mobile-drawer"
+                  className="lg:hidden rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
                 >
-                  {item.label}
-                  {active && <span className="absolute inset-x-2 -bottom-1 block h-[2px] rounded bg-[var(--gold)]" />}
-                </Link>
-              );
-            })}
-
-            {/* CTA: Percorso guidato */}
-            <Link
-              href="/percorso-guidato"
-              className="ml-1 rounded-xl border border-gold/30 bg-gold/20 px-3 py-1.5 text-sm text-gold shadow-[var(--shadow-gold)] transition hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
-            >
-              Percorso guidato
-            </Link>
-
-            {/* Area Venditore — NON linkata */}
-            <span
-              aria-disabled="true"
-              title="In arrivo"
-              className="rounded-xl border border-white/15 px-3 py-1.5 text-xs text-white/85 select-none cursor-not-allowed"
-            >
-              Area Venditore
-            </span>
-          </nav>
-
-          {/* Mobile toggler */}
-          <button
-            onClick={() => setMobileOpen((o) => !o)}
-            aria-label="Apri menu"
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-drawer"
-            className="lg:hidden rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
-          >
-            {mobileOpen ? <X /> : <Menu />}
-          </button>
+                  {mobileOpen ? <X /> : <Menu />}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Mobile drawer */}
@@ -152,15 +163,12 @@ export default function Header() {
             ))}
 
             <div className="mt-3 grid grid-cols-2 gap-2">
-              {/* Percorso guidato (link interno) */}
               <Link
                 href="/percorso-guidato"
                 className="rounded-lg border border-gold/30 bg-gold/15 px-3 py-2 text-center text-gold"
               >
                 Percorso guidato
               </Link>
-
-              {/* Area Venditore (non linkata) */}
               <span
                 aria-disabled="true"
                 className="rounded-lg border border-white/15 px-3 py-2 text-center text-white/85 select-none cursor-not-allowed"
@@ -176,9 +184,7 @@ export default function Header() {
                 aria-label="Home"
                 className="relative inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/90 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
               >
-                <span className="sr-only">Home</span>
-                {/* semplice icona home via emoji per evitare import extra */}
-                🏠
+                <span className="sr-only">Home</span>🏠
               </Link>
             </div>
           </div>
