@@ -215,7 +215,7 @@ export default function Hero({
       className="relative isolate overflow-hidden lg:h-[var(--hero-h,78vh)] lg:pt-[var(--hero-top,20px)]"
       aria-label={ariaLabel}
       style={{
-        background: "linear-gradient(180deg, #060B18 0%, #050A14 100%)",
+       background: "linear-gradient(180deg, #F6F7FB 0%, #ECEFF6 100%)",
         ["--hero-h"]: "78vh",   // altezza fissa desktop
         ["--hero-top"]: "20px", // piccolo margine sopra
       }}
