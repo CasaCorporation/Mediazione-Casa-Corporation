@@ -8,7 +8,7 @@ import {
   Trophy, Crown, ShieldCheck, Rocket, BarChart2, Users, Sparkles, CheckCircle2, X,
 } from "lucide-react";
 import { ButtonGold, ButtonGhost } from "@/common/section/Buttons";
-import { MODELS } from "@/components/carriere/confronto/data";
+import { MODELS } from "@/components/carriere/vendita/data";
 
 /** CasaShowcase — card slim + modale identico (mobile incluso) */
 export default function CasaShowcase({

@@ -7,16 +7,16 @@ import Footer from "@common/layout/Footer";
 import LocalNav from "@common/nav/LocalNav";
 
 import CTAUltra from "@/common/section/CTAUltra";
-import SEOConfronto from "@/components/carriere/confronto/seo/seo"; // SEO specifico
-import HeroConfronto from "@/components/carriere/confronto/hero/hero";
+import SEOConfronto from "@/components/carriere/vendita/seo/seo"; // SEO specifico
+import HeroConfronto from "@/components/carriere/vendita/hero/hero";
 
 // Sezioni
-import ModelCards from "@/components/carriere/confronto/section/ModelCards";
-import ComparisonTable from "@/components/carriere/confronto/section/ComparisonTable";
-import Explainer from "@/components/carriere/confronto/section/Explainer";
+import ModelCards from "@/components/carriere/vendita/section/ModelCards";
+import ComparisonTable from "@/components/carriere/vendita/section/ComparisonTable";
+import Explainer from "@/components/carriere/vendita/section/Explainer";
 
 // Swiper della pagina (solo configurazione, come da progetto)
-import SwiperConfronto from "@/components/carriere/confronto/swiper/swiper";
+import SwiperConfronto from "@/components/carriere/vendita/swiper/swiper";
 
 export default function ConfrontoPage() {
   const ORG = "Casa Corporation";

@@ -4,7 +4,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionHeader, { SectionP } from "@/common/section/SectionHeader";
-import { MODELS, expectedScore } from "@/components/carriere/confronto/data";
+import { MODELS, expectedScore } from "@/components/carriere/vendita/data";
 
 /**
  * COMPARISON TABLE — ULTRA+

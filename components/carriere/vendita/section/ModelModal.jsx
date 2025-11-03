@@ -4,7 +4,7 @@
 import React from "react";
 import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
 import { X } from "lucide-react";
-import { MODELS } from "@/components/carriere/confronto/data";
+import { MODELS } from "@/components/carriere/vendita/data";
 
 export default function ModelModal({ model, onClose }) {
   const backdrop = { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } };

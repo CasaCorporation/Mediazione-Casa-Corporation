@@ -6,14 +6,14 @@ import Header from "@common/layout/Header";
 import Footer from "@common/layout/Footer";
 import LocalNav from "@common/nav/LocalNav";
 
-import HeroGara from "@/components/carriere/gara/hero/hero";
-import WhyItWorks from "@/components/carriere/gara/section/WhyItWorks";
-import Leaderboard from "@/components/carriere/gara/section/LeaderBoard";
-import ContestTable from "@/components/carriere/gara/section/ContestTable";
-import Explainer from "@/components/carriere/gara/section/Explainer";
+import HeroGara from "@/components/carriere/valorizza/hero/hero";
+import WhyItWorks from "@/components/carriere/valorizza/section/WhyItWorks";
+import Leaderboard from "@/components/carriere/valorizza/section/LeaderBoard";
+import ContestTable from "@/components/carriere/valorizza/section/ContestTable";
+import Explainer from "@/components/carriere/valorizza/section/Explainer";
 
 import CTAUltra from "@/common/section/CTAUltra";
-import SwiperGara from "@/components/carriere/gara/swiper/swiper";
+import SwiperGara from "@/components/carriere/valorizza/swiper/swiper";
 
 export default function GaraPage() {
   const ORG = "Casa Corporation";

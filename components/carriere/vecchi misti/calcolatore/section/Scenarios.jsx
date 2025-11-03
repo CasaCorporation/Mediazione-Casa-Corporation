@@ -2,7 +2,7 @@
 
 import React from "react";
 import SectionHeader, { SectionP } from "@/common/section/SectionHeader";
-import { formatEUR, PROVVIGIONE_BASE } from "@/components/carriere/calcolatore/data";
+import { formatEUR, PROVVIGIONE_BASE } from "@/components/carriere/vecchi misti/calcolatore/data";
 
 export default function Scenarios(){
   /* Solo Senior — tre casi tipici */

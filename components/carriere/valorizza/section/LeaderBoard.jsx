@@ -4,7 +4,7 @@
 import React, { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import SectionHeader, { SectionP } from "@/common/section/SectionHeader";
-import { buildRows } from "@/components/carriere/gara/data";
+import { buildRows } from "@/components/carriere/valorizza/data";
 
 /**
  * LeaderBoard — Top 10 (demo)

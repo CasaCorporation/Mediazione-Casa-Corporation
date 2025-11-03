@@ -8,8 +8,8 @@ import {
   BONUS_SHARES,
   DEFAULTS,
   formatEUR,
-} from "@/components/carriere/calcolatore/data";
-import { useCalcolo } from "@/components/carriere/calcolatore/state/CalcoloContext";
+} from "@/components/carriere/vecchi misti/calcolatore/data";
+import { useCalcolo } from "@/components/carriere/vecchi misti/calcolatore/state/CalcoloContext";
 
 /* ========= HELPERS (definiti prima) ========= */
 function sanitizeNumber(v, min, max){

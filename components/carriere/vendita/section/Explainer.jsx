@@ -4,7 +4,7 @@
 import React, { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionHeader, { SectionP } from "@/common/section/SectionHeader";
-import { MODELS } from "@/components/carriere/confronto/data";
+import { MODELS } from "@/components/carriere/vendita/data";
 import { ShieldCheck, Brain, Target, TrendingUp, ClipboardCheck, Maximize2, X } from "lucide-react";
 
 /**

@@ -5,7 +5,7 @@ import React, { useMemo, useState, useRef, useEffect, useCallback } from "react"
 import { motion, useReducedMotion } from "framer-motion";
 import SectionHeader, { SectionP } from "@/common/section/SectionHeader";
 import { ButtonGold, ButtonGhost } from "@/common/section/Buttons";
-import { buildRows } from "@/components/carriere/gara/data";
+import { buildRows } from "@/components/carriere/valorizza/data";
 import { Download, RotateCcw } from "lucide-react";
 
 /**
