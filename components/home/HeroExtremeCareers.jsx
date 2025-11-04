@@ -253,6 +253,12 @@ export default function HeroExtremeCareers() {
           outline: none;
           box-shadow: 0 0 0 4px color-mix(in oklab, var(--brand-ink) 18%, transparent);
         }
+
+        /* === REMOVE GRID OVERLAY (rete) — senza toccare JSX === */
+        /* dentro il wrapper "Glow + grid + vignette", la rete è il 3° div */
+        #hero-careers [aria-hidden].absolute.inset-0 > div:nth-child(3){
+          display: none !important;
+        }
       `}</style>
     </section>
   );

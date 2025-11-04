@@ -200,77 +200,99 @@ video { height: auto; }
   color: var(--gold) !important;
 }
 
-/* === HERO LEGIBILITY v4 — plate locale + text strokes =================== */
-/* knobs rapidi */
+/* === HERO LEGIBILITY v3 — contrast plate + image presence ================= */
+
+/* knobs centrali: regolali a occhio e fine. */
 :root{
-  --plate-bright: .78;   /* 0.65–0.85 schiarita locale dietro al copy */
-  --plate-warm:  .06;    /* 0–.10 leggera tinta calda (aiuta l’oro) */
-  --plate-desi:  .36;    /* 0.25–0.45 desaturazione locale */
-  --plate-blur:  10px;   /* 6–14px */
+  --hero-img-opacity: .66;         /* 0.60–0.72 → immagine più “presente” */
+  --hero-img-contrast: 1.12;       /* 1.06–1.18 */
+  --hero-img-sat: 1.10;            /* 1.04–1.16 */
+
+  /* piastra di contrasto che “oscura” il centro dietro al testo */
+  --hero-plate-strength: .18;      /* 0.10–0.26 → quanto scurire al centro */
+  --hero-plate-radius-x: 56vw;     /* raggio orizzontale */
+  --hero-plate-radius-y: 42vh;     /* raggio verticale */
+  --hero-plate-y: 12%;             /* sposta su/giù il centro (0–25%) */
 }
 
-/* 1) PIASTRA SOLO DIETRO AL BLOCCHETTO TESTI (senza toccare il resto) */
-#hero-careers .max-w-6xl.text-center{
-  position: relative;
-}
-#hero-careers .max-w-6xl.text-center::before{
-  content:"";
-  position:absolute;
-  inset: -1.25rem -2rem;              /* margine attorno al copy */
-  border-radius: 28px;
-  z-index:-1;
-
-  /* due layer: schiarita + leggera tinta calda al centro */
-  background:
-    radial-gradient(120% 140% at 50% 42%,
-      rgba(255,255,255,var(--plate-bright)) 0%,
-      rgba(255,255,255,calc(var(--plate-bright)*.66)) 40%,
-      rgba(255,255,255,0) 75%
-    ),
-    radial-gradient(110% 130% at 50% 42%,
-      rgba(212,175,55,var(--plate-warm)) 0%,
-      rgba(212,175,55,0) 70%
-    );
-
-  /* desaturazione/ammorbidimento SOLO sotto al copy */
-  -webkit-backdrop-filter: blur(var(--plate-blur)) saturate(calc(1 - var(--plate-desi)));
-  backdrop-filter: blur(var(--plate-blur)) saturate(calc(1 - var(--plate-desi)));
-  pointer-events:none;
-}
-
-/* 2) TITOLO: bordino “ottico” + ombre morbide */
-#hero-careers h1{
-  /* piccolo bordo chiaro per staccare dal fondo variabile */
-  -webkit-text-stroke: 0.35px rgba(255,255,255,.35);
-  text-shadow:
-    0 0 0.35px rgba(255,255,255,.35),
-    0 2px 14px rgba(0,0,0,.10);
-}
-#hero-careers h1 .text-gold{
-  /* oro più leggibile: bordo scuro + lieve glow */
-  -webkit-text-stroke: 0.45px rgba(10,16,36,.35);
-  text-shadow:
-    0 1px 0 rgba(255,255,255,.45),
-    0 0 22px rgba(212,175,55,.30);
-  color: color-mix(in oklab, var(--gold) 90%, #3f2f08 10%) !important;
-}
-
-/* 3) DESCRIZIONE: alza di un gradino il contrasto */
-#hero-careers p{
-  color: color-mix(in oklab, var(--color-brand) 88%, #0b0f1e 12%) !important;
-}
-
-/* 4) IMMAGINE: leggermente più “piena” (se serve ancora, sali a .70) */
+/* 1) Immagine più presente (senza cambiare JSX) */
 #hero-careers .fx-on-light{
-  opacity:.68 !important;
+  opacity: var(--hero-img-opacity) !important;
+  mix-blend-mode: normal !important;
   filter:
-    brightness(1.02)
-    contrast(1.14)
-    saturate(1.10)
-    drop-shadow(0 12px 32px rgba(0,0,0,.12));
+    brightness(.98)
+    contrast(var(--hero-img-contrast))
+    saturate(var(--hero-img-sat))
+    drop-shadow(0 12px 28px rgba(0,0,0,.14));
 }
 
-/* 5) CTA blu: micro-boost del focus ring (più visibile) */
+/* 2) PIATRA DI CONTRASTO: scurisce SOLO dietro al copy (non invade i lati) */
+#hero-careers::before{
+  content:"";
+  pointer-events:none;
+  position:absolute; inset:0;
+  z-index:-5; /* tra bg (-z-10) e content (z-10) */
+  background:
+    radial-gradient(
+      var(--hero-plate-radius-x) var(--hero-plate-radius-y)
+      at 50% calc(30% + var(--hero-plate-y)),
+      rgba(0,0,0,var(--hero-plate-strength)),
+      rgba(0,0,0,0) 70%
+    );
+  /* la piastra è neutra (non schiaccia i bianchi), ma dà grip a oro/blu */
+}
+
+/* 3) “De-rumore” dei layer dietro (rete + video) nella zona centrale */
+#hero-careers::after{
+  content:"";
+  pointer-events:none;
+  position:absolute; inset:0;
+  z-index:-6;
+  background:
+    radial-gradient(
+      var(--hero-plate-radius-x) var(--hero-plate-radius-y)
+      at 50% calc(30% + var(--hero-plate-y)),
+      rgba(255,255,255,.06), transparent 68%
+    );
+  /* schiarisce leggermente il layer grafico sotto in centro → meno competizione */
+}
+
+/* 4) Oro e blu: contrasto garantito */
+#hero-careers h1 { letter-spacing: -0.01em; }
+#hero-careers h1 .text-gold{
+  color: color-mix(in oklab, var(--gold) 88%, #3f2f08 12%) !important;
+  text-shadow:
+    0 0 0.5px rgba(0,0,0,.26),
+    0 1px 0 rgba(255,255,255,.55),
+    0 0 22px rgba(212,175,55,.30);
+  filter: saturate(1.06) contrast(1.05);
+}
+/* rinforzo micro-leggibilità delle parti blu del titolo */
+#hero-careers h1 { text-shadow: 0 0 0.35px rgba(0,0,0,.18); }
+
+/* 5) CTA blu: ancora più grip visivo */
+.btn-secondary-ink{
+  background: var(--color-brand) !important;
+  color:#fff !important;
+  border-color: color-mix(in oklab, var(--color-brand) 85%, #000 15%) !important;
+  box-shadow:
+    0 10px 22px rgba(0,0,0,.12),
+    0 0 0 0 rgba(41,64,124,0);
+  font-weight: 700;
+}
+.btn-secondary-ink:hover{
+  background: color-mix(in oklab, var(--color-brand) 94%, #fff 6%) !important;
+  transform: translateY(-1px);
+  box-shadow:
+    0 14px 26px rgba(0,0,0,.16),
+    0 0 0 4px rgba(41,64,124,.20);
+}
 .btn-secondary-ink:focus-visible{
-  box-shadow: 0 0 0 5px rgba(41,64,124,.28) !important;
+  outline:none;
+  box-shadow: 0 0 0 4px rgba(41,64,124,.26);
+}
+
+/* 6) Scroll hint: bordo più visibile su chiaro */
+#hero-careers .border-\[var\(--border-strong\)\]{
+  border-color: rgba(0,0,0,.18) !important;
 }
