@@ -294,3 +294,67 @@ video { height: auto; }
       0 0 18px rgba(201,168,110, calc(var(--gold-glow-soft) + .04));
   }
 }
+/* === HERO — Title Aura (banda organica, non-rettangolare) ============== */
+/* knobs rapidi */
+:root{
+  --aura-bright: .78;   /* 0.64–0.84: luminosità dell’aura */
+  --aura-warm:   .06;   /* 0–.10: quanto “oro” miscelato nell’aura */
+  --aura-blur:   6px;   /* 3–10px: morbidezza (backdrop-filter) */
+}
+
+#hero-careers h1{
+  position: relative;
+  display: inline-block;          /* segue larghezza del testo */
+  isolation: isolate;
+  padding: 0 .8em;                /* respiro laterale minimo */
+  z-index: 1;
+}
+
+/* Aura organica: somma di ellissi sfumate (no rettangolo pieno) */
+#hero-careers h1::before{
+  content:"";
+  position:absolute;
+  z-index:-1;                     /* dietro al testo, davanti all’immagine */
+  left: 50%; top: 50%;
+  transform: translate(-50%,-50%);
+  width: 108%;                    /* un filo più larga del testo */
+  height: calc(100% + .62em);     /* un filo più alta */
+  pointer-events:none;
+
+  /* 5 “macchie” soffici che si sommano: centro + spalle */
+  background:
+    radial-gradient( 38% 120% at 50% 50%, rgba(255,255,255,var(--aura-bright)), transparent 72%),
+    radial-gradient( 26% 70%  at 14% 52%, rgba(255,255,255,var(--aura-bright)), transparent 70%),
+    radial-gradient( 26% 70%  at 86% 48%, rgba(255,255,255,var(--aura-bright)), transparent 70%),
+
+    /* lieve calore per favorire l’oro (quasi impercettibile) */
+    radial-gradient( 34% 120% at 50% 56%, rgba(201,168,110,var(--aura-warm)), transparent 78%),
+    radial-gradient( 22% 60%  at 70% 30%, rgba(201,168,110,calc(var(--aura-warm) * .7)), transparent 70%);
+
+  border-radius: 999px;           /* silhouette ovale, niente angoli */
+  -webkit-backdrop-filter: blur(var(--aura-blur)) saturate(.92);
+  backdrop-filter: blur(var(--aura-blur)) saturate(.92);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.08);   /* lift minimo */
+}
+
+/* Micro-stacco del titolo senza alterare i colori brand */
+#hero-careers h1{
+  text-shadow: 0 0 .35px rgba(0,0,0,.16);
+}
+#hero-careers h1 .text-gold{
+  color: var(--gold) !important;
+  -webkit-text-stroke: 0.35px rgba(10,16,36,.30); /* bordo neutro sottilissimo */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.38),
+    0 0 12px rgba(201,168,110,.18);
+}
+
+/* Mobile: aura un po’ più alta e morbida (immagine più “vicina”) */
+@media (max-width: 640px){
+  :root{ --aura-blur: 8px; --aura-bright: .82; }
+  #hero-careers h1::before{
+    width: 112%;
+    height: calc(100% + .78em);
+  }
+}
