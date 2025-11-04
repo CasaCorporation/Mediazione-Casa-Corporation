@@ -24,32 +24,23 @@ export default function HeroExtremeCareers() {
     <section id="hero-careers" ref={ref} onMouseMove={handleMouseMove} className="relative overflow-hidden">
       <div className="relative isolate grid min-h-[92svh] place-items-center bg-white">
 
-        {/* === BG centrato e CONTAIN (nitido su bianco) === */}
+        {/* === BG centrato e CONTAIN === */}
         <div className="absolute inset-0 -z-10 flex items-center justify-center">
-          {/* leggerissimo brand wash per dare contrasto su bianco */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: "radial-gradient(1000px 480px at 50% -8%, rgba(11,59,122,0.05), transparent 60%)" }}
-            aria-hidden
-          />
-          <div className="relative w-full max-w-[1440px] h-[min(92svh,800px)]" aria-hidden>
+          <div className="relative w-full max-w-[1600px] h-[min(92svh,800px)]" aria-hidden>
             <Image
-              src="/home/hero.avif"        // se disponibile, valuta /home/hero@2x.avif
+              src="/home/hero.avif"
               alt=""
               fill
               priority
-              quality={92}
-              sizes="(min-width:1280px) 1200px, 100vw"
-              className="object-contain object-center select-none pointer-events-none
-                         opacity-35 mix-blend-multiply
-                         [filter:contrast(1.18)_saturate(1.06)] will-change-transform"
+              sizes="100vw"
+              className="object-contain object-center opacity-20 select-none pointer-events-none"
             />
           </div>
         </div>
 
-        {/* BG video opzionale (attenuato su layout chiaro) */}
+        {/* BG video opzionale */}
         <video
-          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-0 md:opacity-10"
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-18"
           autoPlay
           muted
           loop
@@ -81,12 +72,13 @@ export default function HeroExtremeCareers() {
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 mask-soft"
-          style={{ ["--x"]: maskX, ["--y"]: maskY }}
+          style={{ ["--x"]: maskX, ["--y"] : maskY }}
         >
           <div
             className="absolute inset-0"
             style={{
-              background: "radial-gradient(80% 80% at 50% 0%, color-mix(in oklab, var(--gold) 26%, transparent), transparent 60%)",
+              background:
+                "radial-gradient(80% 80% at 50% 0%, color-mix(in oklab, var(--gold) 26%, transparent), transparent 60%)",
             }}
           />
         </motion.div>
@@ -98,7 +90,7 @@ export default function HeroExtremeCareers() {
             <Wand2 className="h-4 w-4 text-gold" /> Casa Corporation — Mediazione
           </span>
 
-          {/* title */}
+          {/* title (forzato blu con !) */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}
             className="mt-6 text-balance text-4xl font-semibold leading-tight !text-[var(--color-brand)] sm:text-6xl md:text-7xl"
