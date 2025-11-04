@@ -22,7 +22,6 @@ export default function HeroExtremeCareers() {
 
   return (
     <section id="hero-careers" ref={ref} onMouseMove={handleMouseMove} className="relative overflow-hidden">
-      {/* wrapper chiaro */}
       <div className="relative isolate grid min-h-[92svh] place-items-center bg-white">
 
         {/* === BG centrato e CONTAIN === */}
@@ -52,11 +51,9 @@ export default function HeroExtremeCareers() {
           <source src="/home/hero.mp4" type="video/mp4" />
         </video>
 
-        {/* Glow + grid overlay (rete visibile anche su bianco) */}
+        {/* Glow + grid overlay (rete su chiaro) */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          {/* leggero glow alto */}
           <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_-10%,rgba(0,0,0,0.06),rgba(0,0,0,0)_60%)]" />
-          {/* rete: linee blu brand molto soft */}
           <div
             className="absolute -inset-[20%] h-[140%] w-[140%] opacity-[0.18]"
             style={{
@@ -67,12 +64,11 @@ export default function HeroExtremeCareers() {
                 "repeating-linear-gradient(90deg, color-mix(in oklab, var(--color-brand) 65%, transparent) 0, color-mix(in oklab, var(--color-brand) 65%, transparent) var(--grid-line), transparent var(--grid-line), transparent var(--grid-step))",
             }}
           />
-          {/* blobs */}
           <div className="absolute left-[-10%] top-[-10%] h-80 w-80 rounded-full blur-3xl" style={{ background: "var(--gold)", opacity: 0.18 }} />
           <div className="absolute bottom-[-10%] right-[-10%] h-96 w-96 rounded-full blur-3xl" style={{ background: "#29407C", opacity: 0.14 }} />
         </div>
 
-        {/* Spotlight cursor (leggero, su bianco) */}
+        {/* Spotlight cursor */}
         <motion.div
           aria-hidden
           className="pointer-events-none absolute inset-0 mask-soft"
@@ -94,10 +90,10 @@ export default function HeroExtremeCareers() {
             <Wand2 className="h-4 w-4 text-gold" /> Casa Corporation — Mediazione
           </span>
 
-          {/* title */}
+          {/* title (forzato blu con !) */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}
-            className="mt-6 text-balance text-4xl font-semibold leading-tight text-[var(--color-brand)] sm:text-6xl md:text-7xl"
+            className="mt-6 text-balance text-4xl font-semibold leading-tight !text-[var(--color-brand)] sm:text-6xl md:text-7xl"
           >
             Valorizza, <span className="text-gold">vendi</span>, <span className="text-gold">affitta</span>.<br className="hidden md:block" />
             Metodo, strumenti, risultati.
@@ -160,7 +156,7 @@ export default function HeroExtremeCareers() {
         </div>
       </div>
 
-      {/* Mask CSS */}
+      {/* Mask CSS + fallback anti-bianco per il titolo */}
       <style jsx global>{`
         .mask-soft {
           --x: 50%;
@@ -170,6 +166,8 @@ export default function HeroExtremeCareers() {
           -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
         }
+        /* Fallback scoped: se qualcosa reimposta bianco, il titolo resta blu */
+        #hero-careers h1 { color: var(--color-brand) !important; }
       `}</style>
     </section>
   );
