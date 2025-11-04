@@ -294,3 +294,72 @@ video { height: auto; }
       0 0 18px rgba(201,168,110, calc(var(--gold-glow-soft) + .04));
   }
 }
+/* === HERO — Title Ribbon (banda morbida dietro all'h1) ================== */
+/* knobs veloci */
+:root{
+  --ribbon-bg: rgba(255,255,255,0.74); /* tinta banda (bianco soft) */
+  --ribbon-warm: rgba(201,168,110,0.06); /* un filo caldo per l’oro */
+  --ribbon-blur: 6px;                   /* 3–10px */
+  --ribbon-pad-y: .32em;                /* spessore verticale extra */
+  --ribbon-pad-x: .80em;                /* respiro laterale */
+  --ribbon-fade: 26%;                   /* 18–34% attenuazione ai bordi */
+  --ribbon-radius: 18px;                /* arrotondamento */
+}
+
+/* trasforma l'h1 in un blocco centrato con layer locale */
+#hero-careers h1{
+  position: relative;
+  display: inline-block;      /* la banda segue la larghezza del testo */
+  margin-inline: auto;        /* resta centrato */
+  padding: 0 var(--ribbon-pad-x);
+  isolation: isolate;         /* crea stacking context pulito */
+  z-index: 1;
+}
+
+/* la banda vera e propria */
+#hero-careers h1::before{
+  content:"";
+  position: absolute;
+  z-index: -1;                /* dietro al testo, davanti all’immagine */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: calc(100% + (var(--ribbon-pad-y) * 2));
+
+  /* fondo morbido con leggero calore al centro e fade ai bordi */
+  background:
+    radial-gradient(120% 180% at 50% 50%, var(--ribbon-warm), transparent 70%),
+    linear-gradient( to right,
+      rgba(255,255,255, var(--ribbon-fade)), var(--ribbon-bg),
+      rgba(255,255,255, var(--ribbon-fade))
+    );
+
+  border-radius: var(--ribbon-radius);
+  -webkit-backdrop-filter: blur(var(--ribbon-blur)) saturate(.92);
+  backdrop-filter: blur(var(--ribbon-blur)) saturate(.92);
+  box-shadow:
+    0 6px 18px rgba(0,0,0,.08),
+    0 1px 0 rgba(255,255,255,.45) inset; /* micro lift */
+}
+
+/* micro-ottimizzazioni del titolo per non cambiare il brand */
+#hero-careers h1{
+  text-shadow: 0 0 .35px rgba(0,0,0,.16); /* stacco leggerissimo */
+}
+#hero-careers h1 .text-gold{
+  color: var(--gold) !important;
+  -webkit-text-stroke: 0.35px rgba(10,16,36,.30); /* bordo neutro sottilissimo */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.40),
+    0 0 12px rgba(201,168,110,.20);
+}
+
+/* Mobile: banda un filo più alta e blur maggiore (immagine più “vicina”) */
+@media (max-width: 640px){
+  :root{
+    --ribbon-blur: 8px;
+    --ribbon-pad-y: .42em;
+    --ribbon-fade: 30%;
+  }
+}
