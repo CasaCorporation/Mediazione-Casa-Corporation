@@ -24,7 +24,7 @@ export default function HeroExtremeCareers() {
     <section id="hero-careers" ref={ref} onMouseMove={handleMouseMove} className="relative overflow-hidden">
       <div className="relative isolate grid min-h-[92svh] place-items-center bg-white">
 
-        {/* === BG centrato e CONTAIN === */}
+        {/* === BG centrato e CONTAIN — nessun effetto === */}
         <div className="absolute inset-0 -z-10 flex items-center justify-center">
           <div className="relative w-full max-w-[1600px] h-[min(92svh,800px)]" aria-hidden>
             <Image
@@ -33,55 +33,10 @@ export default function HeroExtremeCareers() {
               fill
               priority
               sizes="100vw"
-              className="object-contain object-center opacity-20 select-none pointer-events-none"
+              className="object-contain object-center select-none pointer-events-none"
             />
           </div>
         </div>
-
-        {/* BG video opzionale */}
-        <video
-          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-18"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-hidden="true"
-        >
-          <source src="/home/hero.mp4" type="video/mp4" />
-        </video>
-
-        {/* Glow + grid overlay (rete su chiaro) */}
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_-10%,rgba(0,0,0,0.06),rgba(0,0,0,0)_60%)]" />
-          <div
-            className="absolute -inset-[20%] h-[140%] w-[140%] opacity-[0.18]"
-            style={{
-              ["--grid-step"]: "clamp(16px, 2.2vw, 28px)",
-              ["--grid-line"]: "1px",
-              backgroundImage:
-                "repeating-linear-gradient(0deg, color-mix(in oklab, var(--color-brand) 65%, transparent) 0, color-mix(in oklab, var(--color-brand) 65%, transparent) var(--grid-line), transparent var(--grid-line), transparent var(--grid-step)), " +
-                "repeating-linear-gradient(90deg, color-mix(in oklab, var(--color-brand) 65%, transparent) 0, color-mix(in oklab, var(--color-brand) 65%, transparent) var(--grid-line), transparent var(--grid-line), transparent var(--grid-step))",
-            }}
-          />
-          <div className="absolute left-[-10%] top-[-10%] h-80 w-80 rounded-full blur-3xl" style={{ background: "var(--gold)", opacity: 0.18 }} />
-          <div className="absolute bottom-[-10%] right-[-10%] h-96 w-96 rounded-full blur-3xl" style={{ background: "#29407C", opacity: 0.14 }} />
-        </div>
-
-        {/* Spotlight cursor */}
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 mask-soft"
-          style={{ ["--x"]: maskX, ["--y"] : maskY }}
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(80% 80% at 50% 0%, color-mix(in oklab, var(--gold) 26%, transparent), transparent 60%)",
-            }}
-          />
-        </motion.div>
 
         {/* Content */}
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
@@ -90,7 +45,7 @@ export default function HeroExtremeCareers() {
             <Wand2 className="h-4 w-4 text-gold" /> Casa Corporation — Mediazione
           </span>
 
-          {/* title (forzato blu con !) */}
+          {/* title */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}
             className="mt-6 text-balance text-4xl font-semibold leading-tight !text-[var(--color-brand)] sm:text-6xl md:text-7xl"
@@ -156,7 +111,7 @@ export default function HeroExtremeCareers() {
         </div>
       </div>
 
-      {/* Mask CSS + fallback anti-bianco per il titolo */}
+      {/* (solo utilità: manteniamo la classe per eventuali usi futuri, ma non applicata a nulla) */}
       <style jsx global>{`
         .mask-soft {
           --x: 50%;
@@ -166,7 +121,6 @@ export default function HeroExtremeCareers() {
           -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
         }
-        /* Fallback scoped: se qualcosa reimposta bianco, il titolo resta blu */
         #hero-careers h1 { color: var(--color-brand) !important; }
       `}</style>
     </section>
