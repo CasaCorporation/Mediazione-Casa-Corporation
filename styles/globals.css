@@ -200,73 +200,60 @@ video { height: auto; }
   color: var(--gold) !important;
 }
 
-/* === HERO LEGIBILITY — dark lens + outline + tuning =================== */
-/* knobs: ritocca solo questi se serve */
+/* === HERO — leggibilità senza overlay: radial mask sull'immagine ========= */
+/* slider rapidi (tarali a occhio) */
 :root{
-  --lens-strength: .22;      /* 0.16–0.28: quanta ombra dietro al copy */
-  --lens-desat:   .35;       /* 0.25–0.45: quanta desaturazione sotto al copy */
-  --lens-blur:    10px;      /* 6–14px: morbidezza della lente */
-  --img-opacity:  .66;       /* 0.62–0.72: presenza immagine */
+  --hero-mask-rx: 56vw;      /* raggio orizzontale della maschera */
+  --hero-mask-ry: 38vh;      /* raggio verticale */
+  --hero-mask-y:  42%;       /* posizione verticale del centro (40–48%) */
+  --hero-center-dim: .35;    /* 0=trasparente (nasconde), 1=nessuna attenuazione; .30–.45 perfetto */
+  --hero-img-opacity: .76;   /* presenza generale immagine .70–.82 */
 }
 
-/* 1) LENTE SCURA + DESAT SOLO SOTTO AL COPY (niente aloni) */
-#hero-careers .max-w-6xl.text-center{ position: relative; }
-#hero-careers .max-w-6xl.text-center::before{
-  content:"";
-  position:absolute; inset: -1rem -1.5rem;  /* margine intorno al blocco */
-  z-index:-1; pointer-events:none;
-  /* ovale centrale scuro, sfuma verso i bordi */
-  background:
-    radial-gradient(52vw 34vh at 50% 42%,
-      rgba(0,0,0,var(--lens-strength)),
-      rgba(0,0,0,0) 70%);
-  /* ammorbidisce e desatura SOLO lo sfondo sotto i testi */
-  -webkit-backdrop-filter: blur(var(--lens-blur)) saturate(calc(1 - var(--lens-desat)));
-  backdrop-filter: blur(var(--lens-blur)) saturate(calc(1 - var(--lens-desat)));
-  border-radius: 28px;  /* niente bordi duri */
-}
-
-/* 2) TITOLO: contorno ottico per blu e per oro */
-#hero-careers h1{
-  /* leggero bordo chiaro + ombra soffice per stacco generale */
-  -webkit-text-stroke: 0.35px rgba(255,255,255,.35);
-  text-shadow:
-    0 0 0.35px rgba(255,255,255,.35),
-    0 2px 14px rgba(0,0,0,.10);
-}
-#hero-careers h1 .text-gold{
-  /* oro con bordo scuro controllato + glow leggero */
-  -webkit-text-stroke: 0.45px rgba(10,16,36,.35);
-  text-shadow:
-    0 1px 0 rgba(255,255,255,.45),
-    0 0 22px rgba(212,175,55,.30);
-  color: color-mix(in oklab, var(--gold) 90%, #3f2f08 10%) !important;
-}
-
-/* 3) DESCRIZIONE: un gradino più scura per AA stabile */
-#hero-careers p{
-  color: color-mix(in oklab, var(--color-brand) 88%, #0b0f1e 12%) !important;
-}
-
-/* 4) IMMAGINE: un filo più presente (senza multiply) */
+/* 1) Applica una MASCHERA alla sola immagine (niente overlay sopra al testo) */
 #hero-careers .fx-on-light{
-  opacity: var(--img-opacity) !important;
+  opacity: var(--hero-img-opacity) !important;
   mix-blend-mode: normal !important;
   filter:
-    brightness(1.00)
-    contrast(1.12)
-    saturate(1.10)
-    drop-shadow(0 12px 32px rgba(0,0,0,.12));
+    brightness(1.02)
+    contrast(1.10)
+    saturate(1.08)
+    drop-shadow(0 12px 28px rgba(0,0,0,.12));
+
+  /* Maschera radiale: al centro l'immagine è attenuata, ai bordi piena */
+  -webkit-mask-image: radial-gradient(
+    var(--hero-mask-rx) var(--hero-mask-ry) at 50% var(--hero-mask-y),
+    rgba(0,0,0, var(--hero-center-dim)),  /* centro: attenuato (non buco) */
+    rgba(0,0,0, 1) 68%                    /* bordi: pieni */
+  );
+  mask-image: radial-gradient(
+    var(--hero-mask-rx) var(--hero-mask-ry) at 50% var(--hero-mask-y),
+    rgba(0,0,0, var(--hero-center-dim)),
+    rgba(0,0,0, 1) 68%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 
-/* 5) (facoltativo) indebolisci un pelo il video, evita “rumore” dietro al copy */
-#hero-careers video{ opacity:.06 !important; }
+/* 2) Togli rumore di fondo: il video non compete più */
+#hero-careers video{ opacity: .02 !important; } /* o display:none; se preferisci */
 
-/* 6) breakpoints: su mobile scuriamo un po’ di più perché l’immagine è più grande */
-@media (max-width: 640px){
-  :root{
-    --lens-strength: .26;
-    --lens-desat: .40;
-    --img-opacity: .62;
-  }
+/* 3) Micro-stacco “ottico” del titolo (senza contorni pesanti) */
+#hero-careers h1{
+  text-shadow:
+    0 1px 2px rgba(255,255,255,.45), /* schiarisce i bordi su zone leggermente scure */
+    0 0 1px rgba(0,0,0,.12);
 }
+#hero-careers h1 .text-gold{
+  color: color-mix(in oklab, var(--gold) 92%, #3f2f08 8%) !important;
+  text-shadow:
+    0 1px 1px rgba(255,255,255,.45),
+    0 0 12px rgba(212,175,55,.22);
+}
+
+/* 4) Descrizione un filo più leggibile (resta blu brand) */
+#hero-careers p{
+  color: color-mix(in oklab, var(--color-brand) 90%, #0b0f1e 10%) !important;
+}
+
+/* (già fatto sopra) rete rimossa */
