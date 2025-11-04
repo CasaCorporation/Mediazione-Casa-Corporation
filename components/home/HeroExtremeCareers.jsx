@@ -24,7 +24,7 @@ export default function HeroExtremeCareers() {
     <section id="hero-careers" ref={ref} onMouseMove={handleMouseMove} className="relative overflow-hidden">
       <div className="relative isolate grid min-h-[92svh] place-items-center bg-white">
 
-        {/* === BG centrato e CONTAIN — nessun effetto === */}
+        {/* === BG centrato (CONTAIN) con presenza più decisa su chiaro === */}
         <div className="absolute inset-0 -z-10 flex items-center justify-center">
           <div className="relative w-full max-w-[1600px] h-[min(92svh,800px)]" aria-hidden>
             <Image
@@ -33,10 +33,65 @@ export default function HeroExtremeCareers() {
               fill
               priority
               sizes="100vw"
-              className="object-contain object-center select-none pointer-events-none"
+              className="object-contain object-center opacity-35 select-none pointer-events-none fx-on-light"
             />
           </div>
         </div>
+
+        {/* BG video più tenue su chiaro */}
+        <video
+          className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-10"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
+        >
+          <source src="/home/hero.mp4" type="video/mp4" />
+        </video>
+
+        {/* Glow + grid overlay (rete più leggibile su chiaro) + vignetta */}
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          {/* Vignetta morbida per staccare dal bianco */}
+          <div className="absolute inset-0 bg-[radial-gradient(140%_110%_at_50%_-10%,rgba(0,0,0,0.04),rgba(0,0,0,0)_58%)]" />
+          {/* Vignetta periferica leggerissima */}
+          <div className="absolute inset-0 bg-[radial-gradient(110%_85%_at_50%_120%,rgba(0,0,0,0.05),transparent_60%)]" />
+
+          {/* Rete: leggermente più scura e satura su chiaro */}
+          <div
+            className="absolute -inset-[18%] h-[136%] w-[136%] opacity-[0.22]"
+            style={{
+              ["--grid-step"]: "clamp(16px, 2.1vw, 28px)",
+              ["--grid-line"]: "1px",
+              backgroundImage:
+                "repeating-linear-gradient(0deg, color-mix(in oklab, var(--color-brand) 74%, transparent) 0, color-mix(in oklab, var(--color-brand) 74%, transparent) var(--grid-line), transparent var(--grid-line), transparent var(--grid-step)), " +
+                "repeating-linear-gradient(90deg, color-mix(in oklab, var(--color-brand) 74%, transparent) 0, color-mix(in oklab, var(--color-brand) 74%, transparent) var(--grid-line), transparent var(--grid-line), transparent var(--grid-step))",
+            }}
+          />
+
+          {/* Glow brand leggermente più pieno */}
+          <div className="absolute left-[-10%] top-[-12%] h-80 w-80 rounded-full blur-3xl" style={{ background: "var(--gold)", opacity: 0.22 }} />
+          <div className="absolute bottom-[-12%] right-[-10%] h-96 w-96 rounded-full blur-3xl" style={{ background: "#29407C", opacity: 0.18 }} />
+
+          {/* Grana sottilissima per corpo su chiaro */}
+          <div className="absolute inset-0 opacity-10 mix-blend-multiply noise-light" />
+        </div>
+
+        {/* Spotlight cursor (più ampio e soft su chiaro) */}
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 mask-soft"
+          style={{ ["--x"]: maskX, ["--y"] : maskY }}
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(420px 280px at var(--x) var(--y), rgba(255,221,141,0.25), rgba(255,221,141,0.08) 45%, transparent 68%)",
+            }}
+          />
+        </motion.div>
 
         {/* Content */}
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
@@ -50,7 +105,8 @@ export default function HeroExtremeCareers() {
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}
             className="mt-6 text-balance text-4xl font-semibold leading-tight !text-[var(--color-brand)] sm:text-6xl md:text-7xl"
           >
-            Valorizza, <span className="text-gold">vendi</span>, <span className="text-gold">affitta</span>.<br className="hidden md:block" />
+            Valorizza, <span className="text-gold">vendi</span>, <span className="text-gold">affitta</span>.
+            <br className="hidden md:block" />
             Metodo, strumenti, risultati.
           </motion.h1>
 
@@ -111,16 +167,30 @@ export default function HeroExtremeCareers() {
         </div>
       </div>
 
-      {/* (solo utilità: manteniamo la classe per eventuali usi futuri, ma non applicata a nulla) */}
+      {/* Mask CSS + effetti su chiaro */}
       <style jsx global>{`
         .mask-soft {
           --x: 50%;
           --y: 30%;
-          -webkit-mask-image: radial-gradient(240px 160px at var(--x) var(--y), rgba(0,0,0,0.9), transparent 60%);
-          mask-image: radial-gradient(240px 160px at var(--x) var(--y), rgba(0,0,0,0.9), transparent 60%);
+          /* spotlight più soft e ampio su chiaro */
+          -webkit-mask-image: radial-gradient(340px 240px at var(--x) var(--y), rgba(0,0,0,0.9), transparent 70%);
+          mask-image: radial-gradient(340px 240px at var(--x) var(--y), rgba(0,0,0,0.9), transparent 70%);
           -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
         }
+
+        /* Boost leggibilità media su chiaro */
+        .fx-on-light{
+          filter: brightness(0.96) contrast(1.06) saturate(1.06) drop-shadow(0 6px 24px rgba(0,0,0,0.12));
+        }
+
+        /* Rumore sottilissimo per evitare “piatto” su sfondo bianco */
+        .noise-light{
+          background-image: url("data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0.5 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.22'/></svg>`)}");
+          background-size: 140px 140px;
+        }
+
+        /* Fallback scoped: se qualcosa reimposta bianco, il titolo resta blu */
         #hero-careers h1 { color: var(--color-brand) !important; }
       `}</style>
     </section>
