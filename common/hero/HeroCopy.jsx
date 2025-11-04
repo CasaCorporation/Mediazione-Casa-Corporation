@@ -52,7 +52,7 @@ function useFx() {
   };
 }
 
-/** BLOCCO TESTO — MOBILE (invariato tranne colori) */
+/** BLOCCO TESTO — MOBILE (invariato) */
 export function HeroCopyMobile({
   brandMobileHighlight,
   brandMobileSuffix,
@@ -72,29 +72,23 @@ export function HeroCopyMobile({
       variants={fx.container}
     >
       {/* mini brand */}
-      <motion.div
-        variants={fx.item}
-        className="text-[11.5px] font-medium text-[rgba(10,16,36,0.70)]"
-      >
+      <motion.div variants={fx.item} className="text-[11.5px] font-medium text-white/70">
         <GoldenText className="font-semibold">{brandMobileHighlight}</GoldenText>{" "}
         {brandMobileSuffix}
       </motion.div>
 
       {/* titolo */}
-    + <motion.h1
-   variants={fx.item}
-   className="mt-1.5 text-[clamp(26px,7.4vw,36px)] font-extrabold leading-[1.15] tracking-tight text-[rgba(10,16,36,1)]"
- >
+      <motion.h1
+        variants={fx.item}
+        className="mt-1.5 text-[clamp(26px,7.4vw,36px)] font-extrabold leading-[1.15] tracking-tight"
+      >
         {titlePre}{" "}
         <GoldenText>{titleHighlight}</GoldenText>{" "}
         {titlePost}
       </motion.h1>
 
       {/* paragrafo */}
-      <motion.p
-        variants={fx.item}
-        className="mt-2.5 text-[14.5px] text-[rgba(10,16,36,0.85)]"
-      >
+      <motion.p variants={fx.item} className="mt-2.5 text-[14.5px] text-white/85">
         {description}
       </motion.p>
 
@@ -111,7 +105,7 @@ export function HeroCopyMobile({
         {secondaryCta?.label && secondaryCta?.href && (
           <a
             href={secondaryCta.href}
-            className="inline-flex items-center rounded-lg border border-[rgba(10,16,36,0.20)] bg-[rgba(10,16,36,0.05)] px-3.5 py-2 text-[13px] font-semibold text-[rgba(10,16,36,0.90)] hover:bg-[rgba(10,16,36,0.10)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(10,16,36,0.40)]"
+            className="inline-flex items-center rounded-lg border border-white/20 bg-white/5 px-3.5 py-2 text-[13px] font-semibold text-white/90 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
           >
             {secondaryCta.label}
           </a>
@@ -149,29 +143,23 @@ export function HeroCopyDesktop({
       {/* Stack tipografico senza mt-*: usiamo gap per evitare che il titolo a + righe sposti il blocco */}
       <div className="flex flex-col items-start gap-3 sm:gap-4">
         {/* brand */}
-        <motion.div
-          variants={fx.item}
-          className="text-[12px] font-medium text-[rgba(10,16,36,0.70)]"
-        >
+        <motion.div variants={fx.item} className="text-[12px] font-medium text-white/70">
           <GoldenText className="font-semibold">{brandDesktopHighlight}</GoldenText>{" "}
           {brandDesktopSuffix}
         </motion.div>
 
         {/* titolo */}
         <motion.h1
-  variants={fx.item}
-   className="title-balance font-extrabold tracking-tight leading-[1.15] text-[clamp(24px,7vw,36px)] sm:text-[40px] md:text-6xl max-w-[28ch] sm:max-w-none pr-1 text-[rgba(10,16,36,1)]"
- >
+          variants={fx.item}
+          className="title-balance font-extrabold tracking-tight leading-[1.15] text-[clamp(24px,7vw,36px)] sm:text-[40px] md:text-6xl max-w-[28ch] sm:max-w-none pr-1"
+        >
           {titlePre}{" "}
           <GoldenText>{titleHighlight}</GoldenText>
           <br className="hidden md:block" /> {titlePost}
         </motion.h1>
 
         {/* paragrafo */}
-        <motion.p
-          variants={fx.item}
-          className="text-[15.5px] sm:text-[18px] text-[rgba(10,16,36,0.85)] max-w-[68ch]"
-        >
+        <motion.p variants={fx.item} className="text-[15.5px] sm:text-[18px] text-white/85 max-w-[68ch]">
           {description}
         </motion.p>
 
@@ -190,7 +178,7 @@ export function HeroCopyDesktop({
             <a
               href={secondaryCta.href}
               onClick={onSecondaryClick}
-              className="inline-flex items-center rounded-xl border border-[rgba(10,16,36,0.25)] bg-transparent px-4 py-2.5 sm:px-5 sm:py-3 text-[14px] sm:text-[15px] font-semibold text-[rgba(10,16,36,0.90)] hover:bg-[rgba(10,16,36,0.05)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(10,16,36,0.50)]"
+              className="inline-flex items-center rounded-xl border border-white/25 bg-transparent px-4 py-2.5 sm:px-5 sm:py-3 text-[14px] sm:text-[15px] font-semibold text-white/90 hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/50"
             >
               {secondaryCta.label}
             </a>
@@ -199,15 +187,9 @@ export function HeroCopyDesktop({
 
         {/* badges */}
         {!!badges?.length && (
-          <motion.div
-            variants={fx.item}
-            className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[11.5px] sm:text-xs text-[rgba(10,16,36,0.85)]"
-          >
+          <motion.div variants={fx.item} className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[11.5px] sm:text-xs text-white/85">
             {badges.map((b) => (
-              <span
-                key={b}
-                className="inline-flex items-center gap-2 rounded-xl border border-[rgba(10,16,36,0.25)] bg-transparent px-2.5 py-1"
-              >
+              <span key={b} className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-transparent px-2.5 py-1">
                 {b}
               </span>
             ))}
