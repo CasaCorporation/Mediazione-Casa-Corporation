@@ -97,8 +97,8 @@ export default function Header() {
         className={clsx(
           "border-b transition-colors",
           scrolled
-            ? "bg-[rgba(8,12,25,0.75)] backdrop-blur border-white/10"
-            : "bg-[rgba(8,12,25,0.45)] backdrop-blur-sm border-white/10"
+            ? "bg-white/95 backdrop-blur border-[color:rgba(0,0,0,0.06)] shadow-[0_8px_24px_rgba(0,0,0,0.06)]"
+            : "bg-white/90 backdrop-blur-sm border-[color:rgba(0,0,0,0.06)]"
         )}
       >
         <div className="container flex h-14 items-center justify-between">
@@ -123,13 +123,13 @@ export default function Header() {
               </div>
             </a>
 
-            {/* Scritta: Index Carriere */}
+            {/* Scritta: Index Mediazione */}
             <Link
               href="/"
-              aria-label="Home — Carriere Casa Corporation"
+              aria-label="Home — Mediazione Casa Corporation"
               className="hidden text-sm font-semibold sm:inline focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
             >
-              <span className="text-white">Carriere</span>{" "}
+              <span className="text-[var(--color-brand)]">Mediazione</span>{" "}
               <span className="text-gold">Casa Corporation</span>
             </Link>
           </div>
@@ -157,7 +157,7 @@ export default function Header() {
                     lockedSoftware ? (
                       <span
                         aria-disabled="true"
-                        className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm text-white/45 cursor-not-allowed select-none"
+                        className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm text-[var(--color-brand)]/45 cursor-not-allowed select-none"
                         title="Accesso bloccato"
                       >
                         <Lock className="h-4 w-4 opacity-70" />
@@ -168,7 +168,9 @@ export default function Header() {
                         href={item.href}
                         className={clsx(
                           "relative rounded-xl px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40",
-                          active ? "text-gold" : "text-white/80 hover:text-white"
+                          active
+                            ? "text-gold"
+                            : "text-[var(--color-brand)]/80 hover:text-[var(--color-brand)]"
                         )}
                       >
                         {item.label}
@@ -183,7 +185,7 @@ export default function Header() {
                         "inline-flex items-center gap-1 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40 transition",
                         isSpecialAgenti
                           ? "text-gold border border-gold/40 bg-gold/10 shadow-[var(--shadow-gold)] hover:bg-gold/15"
-                          : active ? "text-gold" : "text-white/80 hover:text-white"
+                          : active ? "text-gold" : "text-[var(--color-brand)]/80 hover:text-[var(--color-brand)]"
                       )}
                       aria-expanded={openIdx === idx}
                       aria-haspopup="menu"
@@ -202,7 +204,7 @@ export default function Header() {
                       onMouseLeave={() => { scheduleClose(); setHoverItem(null); }}
                     >
                       <div className="container">
-                        <div className="rounded-2xl border border-white/10 bg-[rgba(8,12,25,0.98)] shadow-2xl overflow-hidden">
+                        <div className="rounded-2xl border border-[rgba(0,0,0,0.08)] bg-white shadow-2xl overflow-hidden">
                           {isSpecialAgenti ? (
                             <SpecialAgentiDropdown item={item} />
                           ) : isSpecialGara ? (
@@ -221,7 +223,7 @@ export default function Header() {
                                 ))}
                                 {hasGroups && item.groups.map((g) => (
                                   <div key={g.title}>
-                                    <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-white/60">{g.title}</div>
+                                    <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-brand)]/60">{g.title}</div>
                                     <div className="grid gap-2">
                                       {g.items.map((c) => (
                                         <DropdownLink key={c.href} item={c} setHoverItem={setHoverItem} />
@@ -254,7 +256,7 @@ export default function Header() {
               href={NAV.find((n) => n.external)?.href || "#"}
               target="_blank"
               rel="noopener"
-              className="rounded-xl border border-white/15 px-3 py-1.5 text-xs text-white/85 hover:bg-white/5"
+              className="rounded-xl border border-[rgba(0,0,0,0.1)] px-3 py-1.5 text-xs text-[var(--color-brand)]/90 hover:bg-[var(--color-brand)]/[0.05]"
             >
               Area Riservata <ExternalLink className="ml-1 inline-block h-3.5 w-3.5 align-text-bottom" />
             </a>
@@ -266,7 +268,7 @@ export default function Header() {
             aria-label="Apri menu"
             aria-expanded={mobileOpen}
             aria-controls="mobile-drawer"
-            className="lg:hidden rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
+            className="lg:hidden rounded-md p-2 text-[var(--color-brand)] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
           >
             {mobileOpen ? <X /> : <Menu />}
           </button>
@@ -275,7 +277,7 @@ export default function Header() {
         {/* Overlay sotto l’header (tap per chiudere) */}
         <div
           className={clsx(
-            "lg:hidden fixed inset-x-0 top-14 z-[60] bg-black/40 backdrop-blur-[2px] transition-opacity",
+            "lg:hidden fixed inset-x-0 top-14 z-[60] bg-black/10 backdrop-blur-[2px] transition-opacity",
             mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           )}
           onClick={() => setMobileOpen(false)}
@@ -288,7 +290,7 @@ export default function Header() {
           role="dialog"
           aria-modal="true"
           className={clsx(
-            "lg:hidden fixed inset-x-0 top-14 z-[80] border-t border-white/10 bg-[rgba(8,12,25,0.98)] transition-transform duration-200 will-change-transform",
+            "lg:hidden fixed inset-x-0 top-14 z-[80] border-t border-[rgba(0,0,0,0.08)] bg-white transition-transform duration-200 will-change-transform",
             mobileOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
           )}
           style={{ maxHeight: "calc(100dvh - 56px)" }}
@@ -311,8 +313,8 @@ export default function Header() {
                     )}
                   >
                     <summary className={clsx(
-                      "flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 hover:bg-white/5",
-                      isSpecialAgenti ? "text-gold" : "text-white/90"
+                      "flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2 hover:bg-[var(--color-brand)]/5",
+                      isSpecialAgenti ? "text-gold" : "text-[var(--color-brand)]/90"
                     )}>
                       <span className="inline-flex items-center gap-1">
                         {isSpecialAgenti && <Sparkles className="h-4 w-4" />}
@@ -329,7 +331,7 @@ export default function Header() {
                             <span
                               key={c.href}
                               aria-disabled="true"
-                              className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-white/45 cursor-not-allowed"
+                              className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-[var(--color-brand)]/45 cursor-not-allowed"
                               title="Accesso bloccato"
                             >
                               <Lock className="h-4 w-4 opacity-70" />
@@ -340,8 +342,8 @@ export default function Header() {
                               key={c.href}
                               href={c.href}
                               className={clsx(
-                                "rounded-lg px-3 py-2 hover:bg-white/5",
-                                isSpecialAgenti ? "text-gold/95" : "text-white/90"
+                                "rounded-lg px-3 py-2 hover:bg-[var(--color-brand)]/5",
+                                isSpecialAgenti ? "text-gold/95" : "text-[var(--color-brand)]/90"
                               )}
                             >
                               {c.label}
@@ -355,7 +357,7 @@ export default function Header() {
                       <div className="ml-2 grid gap-3 pb-2">
                         {item.groups.map((g) => (
                           <div key={g.title}>
-                            <div className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-white/60">
+                            <div className="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-[var(--color-brand)]/60">
                               {g.title}
                             </div>
                             <div className="grid gap-1">
@@ -365,14 +367,14 @@ export default function Header() {
                                   <span
                                     key={c.href}
                                     aria-disabled="true"
-                                    className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-white/45 cursor-not-allowed"
+                                    className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-[var(--color-brand)]/45 cursor-not-allowed"
                                     title="Accesso bloccato"
                                   >
                                     <Lock className="h-4 w-4 opacity-70" />
                                     {c.label}
                                   </span>
                                 ) : (
-                                  <Link key={c.href} href={c.href} className="rounded-lg px-3 py-2 text-white/90 hover:bg-white/5">
+                                  <Link key={c.href} href={c.href} className="rounded-lg px-3 py-2 text-[var(--color-brand)]/90 hover:bg-[var(--color-brand)]/5">
                                     {c.label}
                                   </Link>
                                 );
@@ -393,7 +395,7 @@ export default function Header() {
                 <span
                   key={item.label}
                   aria-disabled="true"
-                  className="block rounded-lg px-3 py-2 text-white/45 cursor-not-allowed"
+                  className="block rounded-lg px-3 py-2 text-[var(--color-brand)]/45 cursor-not-allowed"
                   title="Accesso bloccato"
                 >
                   <span className="inline-flex items-center gap-1.5">
@@ -402,7 +404,7 @@ export default function Header() {
                   </span>
                 </span>
               ) : (
-                <Link key={item.label} href={item.href} className="block rounded-lg px-3 py-2 text-white/90 hover:bg-white/5">
+                <Link key={item.label} href={item.href} className="block rounded-lg px-3 py-2 text-[var(--color-brand)]/90 hover:bg-[var(--color-brand)]/5">
                   {item.label}
                 </Link>
               );
@@ -414,7 +416,7 @@ export default function Header() {
                 href={NAV.find((n) => n.external)?.href || "#"}
                 target="_blank"
                 rel="noopener"
-                className="flex-1 rounded-lg border border-white/15 px-3 py-2 text-center text-white/85 hover:bg-white/5"
+                className="flex-1 rounded-lg border border-[rgba(0,0,0,0.1)] px-3 py-2 text-center text-[var(--color-brand)]/90 hover:bg-[var(--color-brand)]/5"
               >
                 Area Riservata
               </a>
@@ -431,7 +433,7 @@ export default function Header() {
               <Link
                 href="/"
                 aria-label="Home"
-                className="relative inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/90 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
+                className="relative inline-flex h-12 w-12 items-center justify-center rounded-full border border-[rgba(0,0,0,0.1)] bg-[var(--color-brand)]/[0.04] text-[var(--color-brand)]/90 hover:bg-[var(--color-brand)]/[0.08] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
               >
                 <Home className="h-6 w-6" />
                 <span className="sr-only">Home</span>
@@ -460,14 +462,14 @@ function DropdownLink({ item, setHoverItem }) {
     return (
       <span
         aria-disabled="true"
-        className="block rounded-xl border border-white/10 bg-white/[0.02] p-3 text-sm text-white/45 cursor-not-allowed select-none"
+        className="block rounded-xl border border-[rgba(0,0,0,0.08)] bg-[rgba(0,0,0,0.02)] p-3 text-sm text-[var(--color-brand)]/45 cursor-not-allowed select-none"
         title="Accesso bloccato"
       >
         <div className="flex items-start gap-2">
           <Lock className="mt-0.5 h-4 w-4 opacity-70" />
           <div>
-            <div className="font-medium">{item.label}</div>
-            {item.preview?.desc && <div className="mt-0.5 text-xs text-white/60 line-clamp-2">{item.preview.desc}</div>}
+            <div className="font-medium text-[var(--color-brand)]">{item.label}</div>
+            {item.preview?.desc && <div className="mt-0.5 text-xs text-[var(--color-brand)]/60 line-clamp-2">{item.preview.desc}</div>}
           </div>
         </div>
       </span>
@@ -478,10 +480,10 @@ function DropdownLink({ item, setHoverItem }) {
     <Link
       href={item.href}
       onMouseEnter={() => setHoverItem(item.preview || { title: item.label, desc: "", image: null })}
-      className="block rounded-xl border border-white/10 bg-white/[0.04] p-3 text-sm text-white/90 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
+      className="block rounded-xl border border-[rgba(0,0,0,0.08)] bg-white p-3 text-sm text-[var(--color-brand)]/90 hover:bg-[var(--color-brand)]/5 focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
     >
-      <div className="font-medium">{item.label}</div>
-      {item.preview?.desc && <div className="mt-0.5 text-xs text-white/60 line-clamp-2">{item.preview.desc}</div>}
+      <div className="font-medium text-[var(--color-brand)]">{item.label}</div>
+      {item.preview?.desc && <div className="mt-0.5 text-xs text-[var(--color-brand)]/70 line-clamp-2">{item.preview.desc}</div>}
     </Link>
   );
 }
@@ -494,13 +496,13 @@ function PreviewPanel({ hoverItem, fallbackTitle }) {
 
   return (
     <div className="hidden lg:block">
-      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 h-full">
-        <div className="text-sm uppercase tracking-wide text-white/60">Anteprima</div>
-        <div className="mt-2 text-lg font-semibold text-white">{title}</div>
-        <div className="mt-1 text-sm text-white/70">{desc}</div>
+      <div className="rounded-2xl border border-[rgba(0,0,0,0.08)] bg-white p-4 h-full">
+        <div className="text-sm uppercase tracking-wide text-[var(--color-brand)]/60">Anteprima</div>
+        <div className="mt-2 text-lg font-semibold text-[var(--color-brand)]">{title}</div>
+        <div className="mt-1 text-sm text-[var(--color-brand)]/80">{desc}</div>
 
-        <div className="mt-3 h-32 w-full overflow-hidden rounded-xl border border-white/10 relative">
-          <div className="absolute inset-0 bg-[radial-gradient(140px_140px_at_30%_40%,rgba(201,168,110,0.22),transparent),radial-gradient(180px_180px_at_70%_60%,rgba(184,148,88,0.16),transparent)]" />
+        <div className="mt-3 h-32 w-full overflow-hidden rounded-xl border border-[rgba(0,0,0,0.08)] relative">
+          <div className="absolute inset-0 bg-[radial-gradient(140px_140px_at_30%_40%,rgba(201,168,110,0.18),transparent),radial-gradient(180px_180px_at_70%_60%,rgba(184,148,88,0.14),transparent)]" />
           {img && (
             <Image
               src={img}
@@ -530,12 +532,12 @@ function SpecialAgentiDropdown({ item }) {
           <div className="relative h-full w-full rounded-2xl border border-gold/30 bg-gold/10">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_200px_at_30%_10%,rgba(201,168,110,0.25),transparent),radial-gradient(400px_320px_at_80%_70%,rgba(201,168,110,0.18),transparent)]" />
             <div className="relative p-5">
-              <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-black/20 px-3 py-1 text-[11px] font-semibold text-gold">
+              <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-[var(--color-brand)]/10 px-3 py-1 text-[11px] font-semibold text-gold">
                 <Sparkles className="h-3.5 w-3.5" />
-                Focus Carriere
+                Focus Mediazione
               </div>
               <h3 className="mt-3 text-xl font-semibold text-gold">Agenti immobiliari</h3>
-              <p className="mt-1 text-sm text-white/70">
+              <p className="mt-1 text-sm text-[var(--color-brand)]/80">
                 Junior Executive, Corporate Senior e Leader Corporate. Percorsi chiari, strumenti proprietari.
               </p>
               <div className="mt-4 flex gap-2">
@@ -547,7 +549,7 @@ function SpecialAgentiDropdown({ item }) {
                 </Link>
                 <Link
                   href="/carriere/confronto"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-3 py-2 text-sm text-white/85 hover:bg-white/5"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[rgba(0,0,0,0.1)] px-3 py-2 text-sm text-[var(--color-brand)]/90 hover:bg-[var(--color-brand)]/5"
                 >
                   Vedi confronto
                 </Link>
@@ -575,17 +577,17 @@ function SpecialAgentiDropdown({ item }) {
           <Link
             key={r.href}
             href={r.href}
-            className="group relative overflow-hidden rounded-2xl border border-white/12 bg-white/[0.035] transition focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
+            className="group relative overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.08)] bg-white transition focus:outline-none focus:ring-2 focus:ring-[var(--gold)]/40"
           >
             {/* Media full-card */}
             <div className="relative h-44 sm:h-52 lg:h-56 xl:h-60 w-full">
               {/* Glow dorato leggero */}
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-[.22]"
+                className="pointer-events-none absolute inset-0 opacity-[.18]"
                 style={{
                   background:
-                    "radial-gradient(60% 40% at 85% 0%, rgba(201,168,110,.26), rgba(201,168,110,0))",
+                    "radial-gradient(60% 40% at 85% 0%, rgba(201,168,110,.22), rgba(201,168,110,0))",
                 }}
               />
               {r.preview?.image && (
@@ -598,10 +600,10 @@ function SpecialAgentiDropdown({ item }) {
                   priority={false}
                 />
               )}
-              {/* Gradiente di lettura */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(8,12,25,0.78)] via-[rgba(8,12,25,0.28)] to-transparent" />
+              {/* Gradiente chiaro di lettura */}
+              <div className="absolute inset-0 bg-gradient-to-t from-white/85 via-white/20 to-transparent" />
               {/* Chip in alto a destra */}
-              <div className="absolute right-2 top-2 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/30 px-2.5 py-1 text-[10px] font-semibold text-white/85">
+              <div className="absolute right-2 top-2 inline-flex items-center gap-2 rounded-full border border-[rgba(0,0,0,0.1)] bg-[var(--color-brand)]/8 px-2.5 py-1 text-[10px] font-semibold text-[var(--color-brand)]">
                 RUOLO
               </div>
             </div>
@@ -610,12 +612,12 @@ function SpecialAgentiDropdown({ item }) {
             <div className="relative -mt-10 px-4 pb-4">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="text-base font-semibold text-white">{r.label}</div>
+                  <div className="text-base font-semibold text-[var(--color-brand)]">{r.label}</div>
                   {r.preview?.desc && (
-                    <div className="mt-0.5 text-sm text-white/70 line-clamp-2">{r.preview.desc}</div>
+                    <div className="mt-0.5 text-sm text-[var(--color-brand)]/80 line-clamp-2">{r.preview.desc}</div>
                   )}
                 </div>
-                <ArrowRight className="mt-1 h-5 w-5 text-white/70 transition group-hover:translate-x-0.5" />
+                <ArrowRight className="mt-1 h-5 w-5 text-[var(--color-brand)]/70 transition group-hover:translate-x-0.5" />
               </div>
             </div>
           </Link>
@@ -625,7 +627,7 @@ function SpecialAgentiDropdown({ item }) {
   );
 }
 
-/* ------- Dropdown speciale Gara Aziendale (invariato) ------- */
+/* ------- Dropdown speciale Gara Aziendale (invariato nella logica, reso chiaro) ------- */
 function SpecialGaraDropdown({ item, hoverItem, setHoverItem }) {
   const groups = Array.isArray(item.groups) ? item.groups : [];
 
@@ -635,7 +637,7 @@ function SpecialGaraDropdown({ item, hoverItem, setHoverItem }) {
       <div className="lg:col-span-2 xl:col-span-3">
         {groups.map((g) => (
           <div key={g.title} className="mb-4 last:mb-0">
-            <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-white/60">
+            <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-brand)]/60">
               {g.title}
             </div>
             <div className="grid gap-2">
@@ -649,16 +651,16 @@ function SpecialGaraDropdown({ item, hoverItem, setHoverItem }) {
 
       {/* 2) CARD “LA GARA (LIVE)” */}
       <div className="hidden lg:block lg:col-span-1">
-        <div className="relative overflow-hidden rounded-2xl border border-gold/35 bg-white/[0.02] shadow-[0_12px_40px_rgba(10,20,40,.45)]">
+        <div className="relative overflow-hidden rounded-2xl border border-gold/35 bg-white shadow-[0_12px_40px_rgba(10,20,40,.08)]">
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-[0.08]"
+            className="pointer-events-none absolute inset-0 opacity-[0.06]"
             style={{
               backgroundImage: `
-                linear-gradient(45deg, rgba(255,255,255,.18) 25%, transparent 25%),
-                linear-gradient(-45deg, rgba(255,255,255,.18) 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, rgba(255,255,255,.18) 75%),
-                linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.18) 75%)
+                linear-gradient(45deg, rgba(0,0,0,.06) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(0,0,0,.06) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(0,0,0,.06) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(0,0,0,.06) 75%)
               `,
               backgroundSize: "20px 20px",
               backgroundPosition: "0 0, 0 10px, 10px -10px, -10px 0",
@@ -667,19 +669,19 @@ function SpecialGaraDropdown({ item, hoverItem, setHoverItem }) {
           <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gold/20 blur-2xl" />
 
           <div className="relative p-5">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-black/30 px-3 py-1 text-[11px] font-semibold text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-[var(--color-brand)]/10 px-3 py-1 text-[11px] font-semibold text-gold">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="opacity-90"><path d="M14 3v18l-4-2-4 2V3l4 2 4-2z"/></svg>
               La Gara (Live)
             </div>
-            <h3 className="mt-3 text-xl font-semibold text-white">Tabellone live & Classifiche</h3>
-            <p className="mt-1 text-sm text-white/70">Punteggi aggiornati, ranking e premi. Accesso aziendale.</p>
+            <h3 className="mt-3 text-xl font-semibold text-[var(--color-brand)]">Tabellone live & Classifiche</h3>
+            <p className="mt-1 text-sm text-[var(--color-brand)]/80">Punteggi aggiornati, ranking e premi. Accesso aziendale.</p>
             <div className="mt-4">
               <a
                 href="/carriere/gara-live"
                 aria-disabled="true"
                 tabIndex={-1}
                 onClick={(e) => e.preventDefault()}
-                className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-3 py-2 text-sm text-white/80 cursor-not-allowed"
+                className="inline-flex items-center gap-2 rounded-xl border border-[rgba(0,0,0,0.1)] bg-white px-3 py-2 text-sm text-[var(--color-brand)]/80 cursor-not-allowed"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" className="opacity-90" fill="currentColor">
                   <path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm-3 8V6a3 3 0 016 0v3H9z"/>
@@ -706,16 +708,16 @@ function SpecialGaraDropdown({ item, hoverItem, setHoverItem }) {
 /* ------- Teaser Mobile per “Gara Aziendale” ------- */
 function MobileGaraTeaser() {
   return (
-    <div className="mt-3 mx-1 rounded-xl border border-gold/35 bg-white/[0.03] p-3 relative overflow-hidden">
+    <div className="mt-3 mx-1 rounded-xl border border-gold/35 bg-white p-3 relative overflow-hidden">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.08]"
+        className="pointer-events-none absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage: `
-            linear-gradient(45deg, rgba(255,255,255,.18) 25%, transparent 25%),
-            linear-gradient(-45deg, rgba(255,255,255,.18) 25%, transparent 25%),
-            linear-gradient(45deg, transparent 75%, rgba(255,255,255,.18) 75%),
-            linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.18) 75%)
+            linear-gradient(45deg, rgba(0,0,0,.06) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(0,0,0,.06) 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, rgba(0,0,0,.06) 75%),
+            linear-gradient(-45deg, transparent 75%, rgba(0,0,0,.06) 75%)
           `,
           backgroundSize: "16px 16px",
           backgroundPosition: "0 0, 0 8px, 8px -8px, -8px 0",
@@ -723,14 +725,14 @@ function MobileGaraTeaser() {
       />
       <div className="pointer-events-none absolute -right-10 -top-10 h-24 w-24 rounded-full bg-gold/20 blur-xl" />
       <div className="relative z-10">
-        <div className="inline-flex items-center gap-2 rounded-full border border-gold/35 bg-black/30 px-2.5 py-1 text-[10px] font-semibold text-gold">
+        <div className="inline-flex items-center gap-2 rounded-full border border-gold/35 bg-[var(--color-brand)]/10 px-2.5 py-1 text-[10px] font-semibold text-gold">
           <Flag className="h-3 w-3" />
           La Gara (Live)
         </div>
-        <div className="mt-2 text-sm font-semibold">Tabellone & Classifiche</div>
-        <div className="mt-0.5 text-xs text-white/75">Accesso riservato. In arrivo.</div>
+        <div className="mt-2 text-sm font-semibold text-[var(--color-brand)]">Tabellone & Classifiche</div>
+        <div className="mt-0.5 text-xs text-[var(--color-brand)]/75">Accesso riservato. In arrivo.</div>
         <div className="mt-2">
-          <span className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/[0.05] px-2.5 py-1.5 text-xs text-white/80">
+          <span className="inline-flex items-center gap-1.5 rounded-lg border border-[rgba(0,0,0,0.1)] bg-white px-2.5 py-1.5 text-xs text-[var(--color-brand)]/80">
             <Lock className="h-3.5 w-3.5" />
             Accesso bloccato
           </span>
