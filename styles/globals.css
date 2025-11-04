@@ -165,3 +165,17 @@ video { height: auto; }
 /* Link + focus ring coerenti col brand */
 .theme-light a{ color: var(--color-brand); }
 .theme-light :where(:focus-visible){ outline-color: var(--color-brand); }
+
+/* --- HERO PATCH (light theme hard fix) --- */
+.theme-light #hero-careers,
+#hero-careers {
+  color: var(--color-brand) !important;
+}
+#hero-careers h1,
+#hero-careers h1 span {
+  color: var(--color-brand) !important;
+}
+#hero-careers .text-gold {
+  color: var(--gold) !important;
+}
+
