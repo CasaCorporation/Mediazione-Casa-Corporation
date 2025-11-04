@@ -179,3 +179,51 @@ video { height: auto; }
   color: var(--gold) !important;
 }
 
+/* === PATCH LEGIBILITY (appendere in coda) === */
+
+/* 1) Boost visivo dell’immagine (senza toccare JSX) */
+#hero-careers .fx-on-light{
+  /* prima avevi opacity: ~0.35 sulla <Image>; rialzo effettivo qui */
+  opacity: .54 !important;         /* 0.50–0.58 a gusto */
+  mix-blend-mode: normal !important;
+  filter:
+    brightness(.98)
+    contrast(1.08)
+    saturate(1.08)
+    drop-shadow(0 10px 28px rgba(0,0,0,.12));
+}
+
+/* 2) CTA secondarie: da “bianche” a PIENE BLU (stesse classi) */
+.btn-secondary-ink{
+  background: var(--color-brand) !important;
+  color: white !important;
+  border-color: color-mix(in oklab, var(--color-brand) 82%, #000 18%) !important;
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.08),
+    0 0 0 0 rgba(41,64,124,0); /* brand-blue */
+  font-weight: 600;
+}
+.btn-secondary-ink:hover{
+  background: color-mix(in oklab, var(--color-brand) 92%, #fff 8%) !important;
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 26px rgba(0,0,0,.12),
+    0 0 0 4px rgba(41,64,124,.18);
+}
+.btn-secondary-ink:focus-visible{
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(41,64,124,.24);
+}
+
+/* 3) Gold del titolo: più contrasto e “presa” sul chiaro */
+#hero-careers h1 .text-gold{
+  color: color-mix(in oklab, var(--gold) 88%, #4a3b0a 12%) !important; /* leggermente più “deep” */
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.65),         /* micro-outline chiaro contro zone scure */
+    0 0 22px rgba(212,175,55,.28);         /* alone morbido gold */
+  filter: saturate(1.06) contrast(1.04);
+}
+
+/* (opzionale) se vuoi ancora più presenza dell’immagine, alza questa a 0.60 */
+:root { --hero-wash: 0.0; } /* se avevi un wash custom, lo azzeri qui */
