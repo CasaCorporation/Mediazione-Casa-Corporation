@@ -7,7 +7,7 @@ import Footer from "@common/layout/Footer";
 import LocalNav from "@common/nav/LocalNav";
 
 import CTAUltra from "@/common/section/CTAUltra";
-import SEOConfronto from "@/components/carriere/confronto/seo/seo"; // SEO specifico
+import SEOConfronto from "@/components/carriere/confronto/seo/seo";
 import HeroConfronto from "@/components/carriere/confronto/hero/hero";
 
 // Sezioni
@@ -15,11 +15,10 @@ import ModelCards from "@/components/carriere/confronto/section/ModelCards";
 import ComparisonTable from "@/components/carriere/confronto/section/ComparisonTable";
 import Explainer from "@/components/carriere/confronto/section/Explainer";
 
-// Swiper della pagina (solo configurazione, come da progetto)
+// Swiper della pagina
 import SwiperConfronto from "@/components/carriere/confronto/swiper/swiper";
 
 export default function ConfrontoPage() {
-  const ORG = "Casa Corporation";
   const canonical = "https://www.casacorporation.it/carriere/confronto";
 
   const NAV_ITEMS = [
@@ -32,15 +31,13 @@ export default function ConfrontoPage() {
 
   return (
     <>
-      {/* SEO dedicato (title, description, og, ecc.) */}
       <SEOConfronto />
-
-      {/* Canonical */}
       <Head>
         <link rel="canonical" href={canonical} />
       </Head>
 
-      <main className="confronto min-h-screen text-white">
+      {/* SHELL CHIARO + testo blu brand */}
+      <main className="confronto min-h-screen bg-white text-[var(--color-brand)]">
         <Header />
 
         {/* Spacer per Header fixed */}
@@ -49,43 +46,43 @@ export default function ConfrontoPage() {
           style={{ height: "calc(var(--header-h, 56px) + env(safe-area-inset-top, 0px))" }}
         />
 
-        {/* HERO standalone (mantiene il suo background) */}
+        {/* HERO: mantiene il proprio background */}
         <section id="panoramica">
           <HeroConfronto />
         </section>
 
-        {/* LOCAL NAV sticky, colori coerenti */}
+        {/* LOCAL NAV sticky — GRIGIA */}
         <LocalNav
           items={NAV_ITEMS}
           topOffset="var(--header-h, 56px)"
           theme={{
-            bg: "color-mix(in oklab, var(--brand) 88%, black)",
+            bg: "var(--nav-gray)",         // grigio chiaro
             accent: "var(--gold)",
-            ring: "rgba(255,255,255,.16)",
+            ring: "rgba(0,0,0,.12)",
           }}
         />
 
-        {/* ===== CONTENUTI con alternanza sfondi brand ===== */}
-        <Band tone="blue">
+        {/* ===== CONTENUTI: alternanza CLEAN / DIRTY ===== */}
+        <Band tone="clean">
           <section id="modelli">
             <ModelCards />
           </section>
         </Band>
 
-        <Band tone="dark">
+        <Band tone="dirty">
           <section id="tabella">
             <ComparisonTable />
           </section>
         </Band>
 
-        <Band tone="blue">
+        <Band tone="clean">
           <section id="spiegazioni">
             <Explainer />
           </section>
         </Band>
 
-        {/* CTA finale (ancora #cta) */}
-        <Band tone="blue">
+        {/* CTA finale */}
+        <Band tone="dirty">
           <section id="cta">
             <CTAUltra
               title="Vuoi numeri chiari sul tuo caso?"
@@ -97,18 +94,19 @@ export default function ConfrontoPage() {
         </Band>
 
         {/* Swiper pagina Confronto */}
-        <Band tone="dark">
+        <Band tone="clean">
           <SwiperConfronto />
         </Band>
 
         <Footer />
       </main>
 
-      {/* Anchor offset SOLO per questa pagina */}
+      {/* Anchor offset + tokens pagina */}
       <style jsx>{`
         :root {
           --header-h: 56px;
         }
+        .confronto { --nav-gray: rgba(246, 247, 250, 0.92); } /* GRIGIO NAV BAR */
         .confronto section[id] {
           scroll-margin-top: calc(var(--header-h, 56px) + 64px);
         }
@@ -122,25 +120,39 @@ export default function ConfrontoPage() {
   );
 }
 
-/* ===== Wrapper "Band" per alternare sfondi tra i due blu del brand ===== */
-function Band({ tone = "dark", children }) {
-  const cls = tone === "blue" ? "band band-blue" : "band band-dark";
+/* ===== Wrapper "Band" — LIGHT EDITION =====
+   tone="clean"  → bianco pulito
+   tone="dirty"  → bianco molto sporco (solo tonalità, niente pattern)
+*/
+function Band({ tone = "clean", children }) {
+  const cls = tone === "dirty" ? "band band-dirty" : "band band-clean";
   return (
     <div className={cls}>
-      {children}
+      <div className="container mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        {children}
+      </div>
+
       <style jsx>{`
-        .band {
-          position: relative;
-        }
-        .band-dark {
+        .band { position: relative; }
+
+        /* CLEAN: bianco pieno */
+        .band-clean { background: #ffffff; }
+
+        /* DIRTY: bianco “molto sporco” (solo gradient) */
+        .band-dirty {
           background:
-            radial-gradient(40% 26% at 50% 0%, rgba(201, 168, 110, 0.1), transparent 62%),
-            var(--brand-dark);
+            radial-gradient(120% 90% at 0% 0%, rgba(0,0,0,.05), transparent 60%),
+            radial-gradient(120% 90% at 100% 0%, rgba(0,0,0,.045), transparent 62%),
+            radial-gradient(90% 70% at 50% 110%, rgba(0,0,0,.05), transparent 64%),
+            #fbfbfb;
         }
-        .band-blue {
+        /* leggerissima vignetta per stacco */
+        .band-dirty::after{
+          content:""; position:absolute; inset:0; pointer-events:none;
           background:
-            radial-gradient(40% 26% at 50% 0%, rgba(29, 45, 94, 0.34), transparent 62%),
-            var(--brand);
+            radial-gradient(120% 110% at 50% 0%, rgba(0,0,0,.035), transparent 60%),
+            radial-gradient(120% 110% at 50% 100%, rgba(0,0,0,.03), transparent 65%);
+          mix-blend-mode:multiply; opacity:.65;
         }
       `}</style>
     </div>
