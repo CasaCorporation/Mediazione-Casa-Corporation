@@ -257,3 +257,57 @@ video { height: auto; }
 }
 
 /* (già fatto sopra) rete rimossa */
+/* === GOLD LEGIBILITY — metal gradient + micro-stroke =================== */
+/* slider rapidi (se vuoi ritoccare) */
+:root{
+  --gold-deep-mix: 18%;    /* 12–26%: quanto scurire il gold nelle ombre */
+  --gold-stroke:   .40;    /* .32–.50: intensità del micro contorno scuro */
+  --gold-glow:     .24;    /* .18–.32: alone morbido dorato */
+}
+
+/* Applica SOLO alle parole dorate del titolo */
+#hero-careers h1 .text-gold{
+  /* fallback: oro leggermente più “deep” */
+  color: color-mix(in oklab, var(--gold) calc(100% - var(--gold-deep-mix)), #2e2408 var(--gold-deep-mix)) !important;
+
+  /* resa metallica: highlight → mid → shadow → mid */
+  background-image:
+    linear-gradient(
+      180deg,
+      var(--gold-400) 0%,
+      color-mix(in oklab, var(--gold-400) 70%, var(--gold) 30%) 22%,
+      var(--gold) 48%,
+      color-mix(in oklab, var(--gold) calc(100% - var(--gold-deep-mix)), #2e2408 var(--gold-deep-mix)) 62%,
+      var(--gold) 82%,
+      color-mix(in oklab, var(--gold-400) 65%, var(--gold) 35%) 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important; /* usa il gradiente come riempimento */
+
+  /* micro-stroke scuro (invisibile da lontano, salva il bordo su fondi chiari/variabili) */
+  -webkit-text-stroke: 0.45px rgba(10,16,36, var(--gold-stroke));
+
+  /* glow dorato morbido + piccolo bordo chiaro ottico */
+  text-shadow:
+    0 0 1px rgba(255,255,255,.35),
+    0 1px 0 rgba(255,255,255,.35),
+    0 0 22px rgba(212,175,55, var(--gold-glow));
+  filter: saturate(1.06) contrast(1.06);
+}
+
+/* leggero stacco anche sul resto del titolo (blu) senza esagerare) */
+#hero-careers h1{
+  text-shadow: 0 0 .35px rgba(0,0,0,.16);
+}
+
+/* Mobile: caratteri più piccoli → rinforza un pelo il bordo */
+@media (max-width: 640px){
+  #hero-careers h1 .text-gold{
+    -webkit-text-stroke: 0.55px rgba(10,16,36, calc(var(--gold-stroke) + .08));
+    text-shadow:
+      0 0 1px rgba(255,255,255,.40),
+      0 1px 0 rgba(255,255,255,.40),
+      0 0 22px rgba(212,175,55, calc(var(--gold-glow) + .04));
+  }
+}
