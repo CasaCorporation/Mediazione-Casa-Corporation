@@ -1,12 +1,10 @@
-// common/section/SectionHeader.jsx
+// components/home/SectionHeader.jsx
 "use client";
 
 import React from "react";
 
 /**
- * SECTION HEADER — identico allo stile di riferimento
- * + fail-safe: rende il titolo visibile anche se un ancestor imposta gradient/clip/text-transparent.
- *
+ * HOME SectionHeader — titoli blu, highlight oro
  * Props:
  *  - id?: string
  *  - eyebrow?: string
@@ -16,6 +14,7 @@ import React from "react";
  *  - subtitle?: string
  *  - align?: "center" | "left" (default: "center")
  *  - className?: string
+ *  - as?: keyof JSX.IntrinsicElements (default: "h2")
  */
 export default function SectionHeader({
   id,
@@ -26,7 +25,9 @@ export default function SectionHeader({
   subtitle = "",
   align = "center",
   className = "",
+  as = "h2",
 }) {
+  const As = as;
   const isLeft = align === "left";
   const alignCls = isLeft ? "text-left" : "text-center";
   const subWidth = isLeft ? "max-w-2xl" : "mx-auto max-w-3xl";
@@ -35,47 +36,48 @@ export default function SectionHeader({
   return (
     <div id={id} className={`mb-12 ${alignCls} ${className} relative z-[1] isolate`}>
       {eyebrow && (
-        <div className="cc-eyebrow mb-3 text-xs uppercase tracking-[0.2em]">
+        <div className="mb-3 text-xs uppercase tracking-[0.2em] text-[color:var(--eyebrow-color,rgba(11,59,122,.66))]">
           {eyebrow}
         </div>
       )}
 
-      <h2 className={`cc-force-heading text-3xl sm:text-5xl font-semibold ${titleWrap}`}>
+      <As
+        className={`text-3xl sm:text-5xl font-semibold ${titleWrap} leading-tight`}
+        style={{
+          color: "var(--brand-blue, #0b3b7a)",
+          WebkitTextFillColor: "var(--brand-blue, #0b3b7a)",
+        }}
+      >
         {titlePre}
-        {titleHighlight && <span className="text-gold"> {titleHighlight}</span>}
+        {titleHighlight && (
+          <span className="text-gold"> {titleHighlight}</span>
+        )}
         {titlePost && <> {titlePost}</>}
-      </h2>
+      </As>
 
       {subtitle && (
-        <p className={`cc-subtitle ${subWidth} mt-4`}>
+        <p
+          className={`${subWidth} mt-4 leading-relaxed`}
+          style={{
+            color:
+              "oklab(from var(--brand-blue, #0b3b7a) l a b / 0.82)", // blu scuro morbido
+          }}
+        >
           {subtitle}
         </p>
       )}
 
-      {/* FAIL-SAFE CONTRASTO (solo su classi cc-*) */}
+      {/* Safeguard locale (solo per questo componente) */}
       <style jsx global>{`
-        .cc-force-heading {
-          /* forza il testo pieno, eliminando gradient/clip trasparenti */
-          color: #fff !important;
-          -webkit-text-fill-color: #fff !important;
+        /* Evita che eventuali ancestor con gradient/clip rendano trasparente il testo */
+        .${"text-3xl"}[style], .${"sm:text-5xl"}[style] {
           background-image: none !important;
           -webkit-background-clip: initial !important;
           background-clip: initial !important;
           opacity: 1 !important;
           mix-blend-mode: normal !important;
         }
-        .cc-force-heading .text-gold {
-          color: var(--gold) !important;
-          -webkit-text-fill-color: var(--gold) !important;
-        }
-        .cc-eyebrow { color: rgba(255,255,255,.6) !important; }
-        .cc-subtitle { color: rgba(255,255,255,.75) !important; }
       `}</style>
     </div>
   );
-}
-
-/** Paragrafo standard coerente con i sottotitoli */
-export function SectionP({ children, className = "" }) {
-  return <p className={`cc-subtitle mt-4 ${className}`}>{children}</p>;
 }
