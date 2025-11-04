@@ -15,9 +15,9 @@ import Explainer from "@/components/carriere/vendita/section/Explainer";
 import SwiperConfronto from "@/components/carriere/vendita/swiper/swiper";
 
 /* ✅ preset solo colori (niente items) */
-import { LOCALNAV_THEME_LIGHT } from "@/components/common/nav/localNav.theme.js";
+import { LOCALNAV_THEME_LIGHT } from "@/common/nav/localNav.theme.js";
 /* ✅ persistenza in JS */
-import { useLocalNavPersistence } from "@/components/common/nav/useLocalNavPersistence.js";
+import { useLocalNavPersistence } from "@/common/nav/useLocalNavPersistence.js";
 
 export default function ConfrontoPage() {
   const canonical = "https://www.casacorporation.it/carriere/confronto";
