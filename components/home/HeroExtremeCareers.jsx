@@ -21,14 +21,19 @@ export default function HeroExtremeCareers() {
   }
 
   return (
-    <section id="hero-careers" ref={ref} onMouseMove={handleMouseMove} className="relative overflow-hidden">
+    <section
+      id="hero-careers"
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      className="relative overflow-hidden"
+    >
       <div className="relative isolate grid min-h-[92svh] place-items-center bg-white">
 
-        {/* === BG centrato (CONTAIN) con presenza più decisa su chiaro === */}
+        {/* === BG centrato (CONTAIN) === */}
         <div className="absolute inset-0 -z-10 flex items-center justify-center">
           <div className="relative w-full max-w-[1600px] h-[min(92svh,800px)]" aria-hidden>
             <Image
-              src="/home/hero.avif"
+              src="/home/hero.avif"  /* sostituisci con la nuova immagine trasparente */
               alt=""
               fill
               priority
@@ -38,7 +43,7 @@ export default function HeroExtremeCareers() {
           </div>
         </div>
 
-        {/* BG video più tenue su chiaro */}
+        {/* BG video tenue su chiaro (opzionale) */}
         <video
           className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-10"
           autoPlay
@@ -51,44 +56,35 @@ export default function HeroExtremeCareers() {
           <source src="/home/hero.mp4" type="video/mp4" />
         </video>
 
-        {/* Glow + grid overlay (rete più leggibile su chiaro) + vignetta */}
+        {/* Glow + grid + vignette */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          {/* Vignetta morbida per staccare dal bianco */}
-          <div className="absolute inset-0 bg-[radial-gradient(140%_110%_at_50%_-10%,rgba(0,0,0,0.04),rgba(0,0,0,0)_58%)]" />
-          {/* Vignetta periferica leggerissima */}
-          <div className="absolute inset-0 bg-[radial-gradient(110%_85%_at_50%_120%,rgba(0,0,0,0.05),transparent_60%)]" />
-
-          {/* Rete: leggermente più scura e satura su chiaro */}
+          <div className="absolute inset-0 bg-[radial-gradient(140%_110%_at_50%_-10%,rgba(0,0,0,0.045),rgba(0,0,0,0)_58%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(110%_85%_at_50%_120%,rgba(0,0,0,0.055),transparent_60%)]" />
           <div
             className="absolute -inset-[18%] h-[136%] w-[136%] opacity-[0.22]"
             style={{
               ["--grid-step"]: "clamp(16px, 2.1vw, 28px)",
               ["--grid-line"]: "1px",
               backgroundImage:
-                "repeating-linear-gradient(0deg, color-mix(in oklab, var(--color-brand) 74%, transparent) 0, color-mix(in oklab, var(--color-brand) 74%, transparent) var(--grid-line), transparent var(--grid-line), transparent var(--grid-step)), " +
-                "repeating-linear-gradient(90deg, color-mix(in oklab, var(--color-brand) 74%, transparent) 0, color-mix(in oklab, var(--color-brand) 74%, transparent) var(--grid-line), transparent var(--grid-line), transparent var(--grid-step))",
+                "repeating-linear-gradient(0deg, color-mix(in oklab, var(--color-brand) 78%, transparent) 0, color-mix(in oklab, var(--color-brand) 78%, transparent) var(--grid-line), transparent var(--grid-line), transparent var(--grid-step)), " +
+                "repeating-linear-gradient(90deg, color-mix(in oklab, var(--color-brand) 78%, transparent) 0, color-mix(in oklab, var(--color-brand) 78%, transparent) var(--grid-line), transparent var(--grid-line), transparent var(--grid-step))",
             }}
           />
-
-          {/* Glow brand leggermente più pieno */}
-          <div className="absolute left-[-10%] top-[-12%] h-80 w-80 rounded-full blur-3xl" style={{ background: "var(--gold)", opacity: 0.22 }} />
-          <div className="absolute bottom-[-12%] right-[-10%] h-96 w-96 rounded-full blur-3xl" style={{ background: "#29407C", opacity: 0.18 }} />
-
-          {/* Grana sottilissima per corpo su chiaro */}
+          <div className="absolute left-[-10%] top-[-12%] h-80 w-80 rounded-full blur-3xl"
+               style={{ background: "var(--gold)", opacity: 0.22 }} />
+          <div className="absolute bottom-[-12%] right-[-10%] h-96 w-96 rounded-full blur-3xl"
+               style={{ background: "#29407C", opacity: 0.18 }} />
           <div className="absolute inset-0 opacity-10 mix-blend-multiply noise-light" />
         </div>
 
-        {/* Spotlight cursor (più ampio e soft su chiaro) */}
-        <motion.div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 mask-soft"
-          style={{ ["--x"]: maskX, ["--y"] : maskY }}
-        >
+        {/* Spotlight */}
+        <motion.div aria-hidden className="pointer-events-none absolute inset-0 mask-soft"
+          style={{ ["--x"]: maskX, ["--y"]: maskY }} >
           <div
             className="absolute inset-0"
             style={{
               background:
-                "radial-gradient(420px 280px at var(--x) var(--y), rgba(255,221,141,0.25), rgba(255,221,141,0.08) 45%, transparent 68%)",
+                "radial-gradient(420px 280px at var(--x) var(--y), rgba(255,221,141,0.22), rgba(255,221,141,0.08) 45%, transparent 68%)",
             }}
           />
         </motion.div>
@@ -96,14 +92,14 @@ export default function HeroExtremeCareers() {
         {/* Content */}
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
           {/* pill */}
-          <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,0,0,0.08)] bg-[var(--color-brand)]/5 px-3 py-1 text-xs font-medium text-[var(--color-brand)] backdrop-blur">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] bg-[var(--brand-ink)]/4 px-3 py-1 text-xs font-medium text-[var(--brand-ink)] backdrop-blur">
             <Wand2 className="h-4 w-4 text-gold" /> Casa Corporation — Mediazione
           </span>
 
           {/* title */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}
-            className="mt-6 text-balance text-4xl font-semibold leading-tight !text-[var(--color-brand)] sm:text-6xl md:text-7xl"
+            className="mt-6 text-balance text-4xl font-semibold leading-tight text-[var(--brand-ink)] sm:text-6xl md:text-7xl"
           >
             Valorizza, <span className="text-gold">vendi</span>, <span className="text-gold">affitta</span>.
             <br className="hidden md:block" />
@@ -113,85 +109,150 @@ export default function HeroExtremeCareers() {
           {/* description */}
           <motion.p
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15, duration: 0.9 }}
-            className="mx-auto mt-5 max-w-3xl text-pretty text-base text-[var(--color-brand)]/80 sm:text-lg"
+            className="mx-auto mt-5 max-w-3xl text-pretty text-base text-[var(--ink-soft)] sm:text-lg"
           >
             Processi chiari, zero frizioni e strumenti proprietari. Dalla valutazione all’incarico, fino al rogito: KPI verificabili.
           </motion.p>
 
           {/* CTAs */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            {/* Primaria (gold, alto contrasto) */}
             <a
               href="/valorizza"
-              className="rounded-2xl border border-gold/40 bg-gold/20 px-6 py-3 text-base text-gold shadow-[var(--shadow-gold)] transition hover:-translate-y-0.5"
+              aria-label="Inizia da Valorizza"
+              className="btn-primary-gold"
             >
               Inizia da Valorizza →
             </a>
+
+            {/* Secondarie (ink, bordo chiaro, hover soft) */}
             <a
               href="/vendita"
-              className="rounded-2xl border border-[rgba(0,0,0,0.10)] px-4 py-2 text-sm text-[var(--color-brand)]/90 hover:bg-[var(--color-brand)]/5"
+              aria-label="Percorso Vendita"
+              className="btn-secondary-ink"
             >
               Percorso Vendita
             </a>
+
             <a
               href="/affitto"
-              className="rounded-2xl border border-[rgba(0,0,0,0.10)] px-4 py-2 text-sm text-[var(--color-brand)]/90 hover:bg-[var(--color-brand)]/5"
+              aria-label="Percorso Affitto"
+              className="btn-secondary-ink"
             >
               Percorso Affitto
             </a>
           </div>
 
           {/* badges */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-[var(--color-brand)]/80">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,0,0,0.10)] bg-[var(--color-brand)]/6 px-3 py-1 text-xs backdrop-blur">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-[var(--ink-soft)]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] bg-[var(--brand-ink)]/4 px-3 py-1 text-xs backdrop-blur">
               <ShieldCheck className="h-4 w-4 text-gold" /> Mandati trasparenti
             </span>
-            <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,0,0,0.10)] bg-[var(--color-brand)]/6 px-3 py-1 text-xs backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] bg-[var(--brand-ink)]/4 px-3 py-1 text-xs backdrop-blur">
               <Users className="h-4 w-4 text-gold" /> Team dedicato
             </span>
-            <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,0,0,0.10)] bg-[var(--color-brand)]/6 px-3 py-1 text-xs backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-strong)] bg-[var(--brand-ink)]/4 px-3 py-1 text-xs backdrop-blur">
               <Trophy className="h-4 w-4 text-gold" /> KPI verificabili
             </span>
           </div>
         </div>
 
         {/* Scroll hint */}
-        <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-[var(--color-brand)]/60">
+        <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 text-[var(--ink-soft)]">
           <div className="flex items-center gap-2 text-xs">
             Scorri per esplorare
             <motion.div
               animate={{ y: [0, 6, 0] }}
               transition={{ duration: 1.6, repeat: Infinity }}
-              className="h-6 w-4 rounded-full border border-[rgba(0,0,0,0.18)]"
+              className="h-6 w-4 rounded-full border border-[var(--border-strong)]"
             />
           </div>
         </div>
       </div>
 
-      {/* Mask CSS + effetti su chiaro */}
+      {/* Styles (tema chiaro calibrato) */}
       <style jsx global>{`
+        /* ====== Token "ink" per tema chiaro (derivati dal brand) ====== */
+        :root {
+          --brand-ink: color-mix(in oklab, var(--color-brand) 84%, #0a0a0a 16%);
+          --ink-soft: color-mix(in oklab, var(--brand-ink) 70%, #0a0a0a 30%);
+          --border-soft: rgba(0,0,0,0.08);
+          --border-strong: rgba(0,0,0,0.12);
+        }
+
+        /* Spotlight morbido */
         .mask-soft {
           --x: 50%;
           --y: 30%;
-          /* spotlight più soft e ampio su chiaro */
-          -webkit-mask-image: radial-gradient(340px 240px at var(--x) var(--y), rgba(0,0,0,0.9), transparent 70%);
-          mask-image: radial-gradient(340px 240px at var(--x) var(--y), rgba(0,0,0,0.9), transparent 70%);
+          -webkit-mask-image: radial-gradient(340px 240px at var(--x) var(--y), rgba(0,0,0,0.88), transparent 70%);
+          mask-image: radial-gradient(340px 240px at var(--x) var(--y), rgba(0,0,0,0.88), transparent 70%);
           -webkit-mask-repeat: no-repeat;
           mask-repeat: no-repeat;
         }
 
         /* Boost leggibilità media su chiaro */
-        .fx-on-light{
+        .fx-on-light {
           filter: brightness(0.96) contrast(1.06) saturate(1.06) drop-shadow(0 6px 24px rgba(0,0,0,0.12));
         }
 
         /* Rumore sottilissimo per evitare “piatto” su sfondo bianco */
-        .noise-light{
+        .noise-light {
           background-image: url("data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0.5 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.22'/></svg>`)}");
           background-size: 140px 140px;
         }
 
-        /* Fallback scoped: se qualcosa reimposta bianco, il titolo resta blu */
-        #hero-careers h1 { color: var(--color-brand) !important; }
+        /* Titolo forzato su brand-ink */
+        #hero-careers h1 { color: var(--brand-ink) !important; }
+
+        /* ====== Bottoni (accessibilità AA su chiaro) ====== */
+        .btn-primary-gold {
+          display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+          padding: 0.75rem 1.25rem;
+          border-radius: 1rem;
+          background: color-mix(in oklab, var(--gold) 88%, #000 12%);
+          color: #2a1e00; /* testo scuro su gold per AA */
+          border: 1px solid color-mix(in oklab, var(--gold) 55%, #000 45%);
+          box-shadow:
+            0 6px 16px rgba(0,0,0,.08),
+            0 2px 0 rgba(0,0,0,.04) inset,
+            0 0 0 0 rgba(212,175,55,.0);
+          font-weight: 600;
+          transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+        }
+        .btn-primary-gold:hover {
+          transform: translateY(-1px);
+          background: color-mix(in oklab, var(--gold) 92%, #000 8%);
+          box-shadow:
+            0 10px 22px rgba(0,0,0,.10),
+            0 0 0 4px rgba(212,175,55,.15);
+        }
+        .btn-primary-gold:focus-visible {
+          outline: none;
+          box-shadow:
+            0 10px 22px rgba(0,0,0,.10),
+            0 0 0 4px rgba(212,175,55,.22);
+        }
+
+        .btn-secondary-ink {
+          display: inline-flex; align-items: center; justify-content: center;
+          padding: 0.6rem 0.9rem;
+          border-radius: 0.9rem;
+          border: 1px solid var(--border-strong);
+          color: var(--brand-ink);
+          background: rgba(0,0,0,0);
+          font-weight: 500;
+          transition: background .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+        }
+        .btn-secondary-ink:hover {
+          background: color-mix(in oklab, var(--brand-ink) 6%, transparent);
+          border-color: color-mix(in oklab, var(--brand-ink) 18%, transparent);
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(0,0,0,.06);
+        }
+        .btn-secondary-ink:focus-visible {
+          outline: none;
+          box-shadow: 0 0 0 4px color-mix(in oklab, var(--brand-ink) 18%, transparent);
+        }
       `}</style>
     </section>
   );
