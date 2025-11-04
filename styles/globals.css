@@ -1,7 +1,9 @@
 /* Tailwind v4 */
 @import "tailwindcss";
 
-/* === Theme tokens === */
+/* =========================================
+   THEME TOKENS
+========================================= */
 @theme {
   --color-brand: #1D2D5E;
   --color-brand-dark: #0A1024;
@@ -10,25 +12,27 @@
   --shadow-gold: 0 10px 30px -12px rgb(201 168 110 / 0.45);
 }
 
-/* === Vars unificate === */
-:root{
+/* =========================================
+   ROOT VARS (UNIFICATE)
+========================================= */
+:root {
   /* palette */
-  --brand:#1D2D5E;
-  --brand-dark:#0A1024;
-  --gold:#C9A86E;
-  --gold-400:#E7D2A4;
+  --brand: #1D2D5E;
+  --brand-dark: #0A1024;
+  --gold: #C9A86E;
+  --gold-400: #E7D2A4;
 
   /* alias/compat */
   --blue: var(--brand);
 
-  /* page theme (di default dark) */
+  /* page theme (default dark) */
   --page-bg: var(--brand-dark);
   --page-text: #ffffff;
 
   /* vetro */
-  --glass-bg: rgba(255,255,255,0.05);
-  --glass-stroke: rgba(255,255,255,0.10);
-  --glass-stroke-strong: rgba(255,255,255,0.16);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-stroke: rgba(255, 255, 255, 0.10);
+  --glass-stroke-strong: rgba(255, 255, 255, 0.16);
 
   /* font stack (derivano da next/font in _document) */
   --ff-sans: var(--font-inter), system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
@@ -37,7 +41,7 @@
   /* Fallback altezza header */
   --header-h: 56px;
 
-  /* === Hero metrics unificate === */
+  /* Hero metrics unificate */
   --hero-pt: clamp(5.5rem, 7vw, 7rem);
   --hero-pb: clamp(2.5rem, 4vw, 3.5rem);
   --hero-media-w: clamp(320px, 44vw, 620px);
@@ -45,41 +49,41 @@
   --hero-media-top: -24px;
 }
 
-/* Temi applicabili al wrapper pagina (es. <main class="theme-light">) */
-.theme-dark{
+/* =========================================
+   THEMES WRAPPER
+========================================= */
+.theme-dark {
   --page-bg: var(--brand-dark);
   --page-text: #ffffff;
 }
-.theme-light{
+.theme-light {
   --page-bg: #ffffff;
   --page-text: #0b1023;
 }
 
-/* Base layout: niente smooth globale (rompe i pin) */
+/* =========================================
+   BASE / RESET
+========================================= */
 html, body, #__next {
   min-height: 100%;
   background: var(--page-bg);
   color: var(--page-text);
 }
-/* Niente barra orizzontale globale */
-html, body { overflow-x: clip; }
+html, body { overflow-x: clip; } /* niente barra orizzontale */
 
 body { font-family: var(--ff-sans); }
 .h-serif { font-family: var(--ff-serif); }
 
-/* Selection in oro (leggera) */
 ::selection {
   background: color-mix(in oklab, var(--gold) 26%, transparent);
 }
 
-/* Reset media soft */
-img, svg, video, canvas {
-  display: block;
-  max-width: 100%;
-}
+img, svg, video, canvas { display: block; max-width: 100%; }
 video { height: auto; }
 
-/* Utility */
+/* =========================================
+   UTILITY
+========================================= */
 .glass { @apply bg-white/5 backdrop-blur border border-white/10; }
 .section { @apply py-20 sm:py-28; }
 .container { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
@@ -90,53 +94,68 @@ video { height: auto; }
   mask-image: radial-gradient(260px 260px at var(--x) var(--y), black 0%, transparent 60%);
 }
 
-/* Accenti oro */
+/* Accenti oro (bordo + glow on hover) */
 .gold-acc {
   position: relative;
   border: 1px solid var(--glass-stroke);
   background: var(--glass-bg);
 }
 .gold-acc::after {
-  content:"";
-  pointer-events:none;
-  position:absolute; inset:-1px;
-  border-radius:inherit;
+  content: "";
+  pointer-events: none;
+  position: absolute; inset: -1px;
+  border-radius: inherit;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity:.0; transition:opacity .25s ease;
+  opacity: 0;
+  transition: opacity .25s ease;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor; mask-composite: exclude;
-  padding:1px;
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
 }
-.gold-acc:hover::after { opacity:.55; }
+.gold-acc:hover::after { opacity: .55; }
 
 /* Scrollbar utility (mobile) */
 .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-none::-webkit-scrollbar { display: none; }
 
-/* === Hero media mobile (spostato qui per centralizzare) === */
-.hero-mobile-media{
-  aspect-ratio: 100 / 46; /* come prima */
+/* =========================================
+   HERO MEDIA (MOBILE)
+========================================= */
+.hero-mobile-media {
+  aspect-ratio: 100 / 46;
   max-height: 320px;
 }
-@media (orientation: landscape) and (max-width: 768px){
-  .hero-mobile-media{
+@media (orientation: landscape) and (max-width: 768px) {
+  .hero-mobile-media {
     aspect-ratio: 100 / 40;
     max-height: 280px;
   }
 }
 
-/* Plugin Tailwind v4 (se usi le utility) */
+/* =========================================
+   TAILWIND PLUGINS
+========================================= */
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/aspect-ratio";
 
-/* Respect reduced motion */
+/* =========================================
+   ACCESSIBILITY (reduced motion)
+========================================= */
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-/* === Mediazione Light Theme — overrides rapidi e non invasivi === */
+/* =========================================
+   MEDIAZIONE LIGHT THEME — OVERRIDES
+   (non invasivi, remap su classi note)
+========================================= */
 
 /* Remap testi bianchi → blu brand (conservando le opacità) */
 .theme-light .text-white{ color: var(--color-brand) !important; }
@@ -154,19 +173,21 @@ video { height: auto; }
 .theme-light .text-white\/50{ color: color(from var(--color-brand) srgb r g b / 0.50) !important; }
 .theme-light .text-white\/45{ color: color(from var(--color-brand) srgb r g b / 0.45) !important; }
 
-/* Backgrounds scuri → bianco */
-.theme-light .bg-\[var\(--brand-dark\)\]{ background-color:#ffffff !important; }
+/* Background scuro → bianco */
+.theme-light .bg-\[var\(--brand-dark\)\] { background-color: #ffffff !important; }
 
 /* Icone/bordi bianchi → blu brand */
-.theme-light .border-white{ border-color: var(--color-brand) !important; }
-.theme-light .fill-white{ fill: var(--color-brand) !important; }
-.theme-light .stroke-white{ stroke: var(--color-brand) !important; }
+.theme-light .border-white { border-color: var(--color-brand) !important; }
+.theme-light .fill-white { fill: var(--color-brand) !important; }
+.theme-light .stroke-white { stroke: var(--color-brand) !important; }
 
 /* Link + focus ring coerenti col brand */
-.theme-light a{ color: var(--color-brand); }
-.theme-light :where(:focus-visible){ outline-color: var(--color-brand); }
+.theme-light a { color: var(--color-brand); }
+.theme-light :where(:focus-visible) { outline-color: var(--color-brand); }
 
-/* --- HERO PATCH (light theme hard fix) --- */
+/* =========================================
+   HERO: LIGHT THEME HARD FIX
+========================================= */
 .theme-light #hero-careers,
 #hero-careers {
   color: var(--color-brand) !important;
@@ -179,12 +200,14 @@ video { height: auto; }
   color: var(--gold) !important;
 }
 
-/* === PATCH LEGIBILITY (appendere in coda) === */
+/* =========================================
+   HERO LEGIBILITY PATCH
+   (boost immagine, CTA blu piene, gold più leggibile)
+========================================= */
 
-/* 1) Boost visivo dell’immagine (senza toccare JSX) */
-#hero-careers .fx-on-light{
-  /* prima avevi opacity: ~0.35 sulla <Image>; rialzo effettivo qui */
-  opacity: .54 !important;         /* 0.50–0.58 a gusto */
+/* 1) Immagine più presente (senza toccare JSX) */
+#hero-careers .fx-on-light {
+  opacity: .54 !important; /* 0.50–0.58 a gusto */
   mix-blend-mode: normal !important;
   filter:
     brightness(.98)
@@ -193,37 +216,36 @@ video { height: auto; }
     drop-shadow(0 10px 28px rgba(0,0,0,.12));
 }
 
-/* 2) CTA secondarie: da “bianche” a PIENE BLU (stesse classi) */
-.btn-secondary-ink{
+/* 2) CTA secondarie: PIENE BLU (stesse classi markup) */
+.btn-secondary-ink {
   background: var(--color-brand) !important;
-  color: white !important;
+  color: #fff !important;
   border-color: color-mix(in oklab, var(--color-brand) 82%, #000 18%) !important;
   box-shadow:
     0 8px 18px rgba(0,0,0,.08),
-    0 0 0 0 rgba(41,64,124,0); /* brand-blue */
+    0 0 0 0 rgba(41,64,124,0);
   font-weight: 600;
 }
-.btn-secondary-ink:hover{
+.btn-secondary-ink:hover {
   background: color-mix(in oklab, var(--color-brand) 92%, #fff 8%) !important;
   transform: translateY(-1px);
   box-shadow:
     0 12px 26px rgba(0,0,0,.12),
     0 0 0 4px rgba(41,64,124,.18);
 }
-.btn-secondary-ink:focus-visible{
+.btn-secondary-ink:focus-visible {
   outline: none;
-  box-shadow:
-    0 0 0 4px rgba(41,64,124,.24);
+  box-shadow: 0 0 0 4px rgba(41,64,124,.24);
 }
 
-/* 3) Gold del titolo: più contrasto e “presa” sul chiaro */
-#hero-careers h1 .text-gold{
-  color: color-mix(in oklab, var(--gold) 88%, #4a3b0a 12%) !important; /* leggermente più “deep” */
+/* 3) Gold del titolo: più contrasto e presa sul chiaro */
+#hero-careers h1 .text-gold {
+  color: color-mix(in oklab, var(--gold) 88%, #4a3b0a 12%) !important;
   text-shadow:
-    0 1px 0 rgba(255,255,255,.65),         /* micro-outline chiaro contro zone scure */
-    0 0 22px rgba(212,175,55,.28);         /* alone morbido gold */
+    0 1px 0 rgba(255,255,255,.65),
+    0 0 22px rgba(212,175,55,.28);
   filter: saturate(1.06) contrast(1.04);
 }
 
-/* (opzionale) se vuoi ancora più presenza dell’immagine, alza questa a 0.60 */
-:root { --hero-wash: 0.0; } /* se avevi un wash custom, lo azzeri qui */
+/* (opzionale) azzera eventuale wash globale del hero */
+:root { --hero-wash: 0.0; }
