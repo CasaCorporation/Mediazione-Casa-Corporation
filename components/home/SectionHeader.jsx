@@ -4,17 +4,7 @@
 import React from "react";
 
 /**
- * HOME SectionHeader — titoli blu, highlight oro
- * Props:
- *  - id?: string
- *  - eyebrow?: string
- *  - titlePre?: string
- *  - titleHighlight?: string
- *  - titlePost?: string
- *  - subtitle?: string
- *  - align?: "center" | "left" (default: "center")
- *  - className?: string
- *  - as?: keyof JSX.IntrinsicElements (default: "h2")
+ * HOME SectionHeader — titoli blu + highlight oro funzionante
  */
 export default function SectionHeader({
   id,
@@ -42,15 +32,23 @@ export default function SectionHeader({
       )}
 
       <As
-        className={`text-3xl sm:text-5xl font-semibold ${titleWrap} leading-tight`}
+        className={`cc-title-blue text-3xl sm:text-5xl font-semibold ${titleWrap} leading-tight`}
         style={{
+          // solo 'color' (il fill lo gestiamo per span oro), così il figlio può sovrascrivere
           color: "var(--brand-blue, #0b3b7a)",
-          WebkitTextFillColor: "var(--brand-blue, #0b3b7a)",
         }}
       >
         {titlePre}
         {titleHighlight && (
-          <span className="text-gold"> {titleHighlight}</span>
+          <span
+            className="cc-gold text-gold"
+            style={{
+              color: "var(--gold)",
+              WebkitTextFillColor: "var(--gold)", // forza il fill oro anche con clip/gradient upstream
+            }}
+          >
+            {" "}{titleHighlight}
+          </span>
         )}
         {titlePost && <> {titlePost}</>}
       </As>
@@ -59,23 +57,26 @@ export default function SectionHeader({
         <p
           className={`${subWidth} mt-4 leading-relaxed`}
           style={{
-            color:
-              "oklab(from var(--brand-blue, #0b3b7a) l a b / 0.82)", // blu scuro morbido
+            color: "color-mix(in oklab, var(--brand-blue, #0b3b7a) 85%, white 15%)",
           }}
         >
           {subtitle}
         </p>
       )}
 
-      {/* Safeguard locale (solo per questo componente) */}
       <style jsx global>{`
-        /* Evita che eventuali ancestor con gradient/clip rendano trasparente il testo */
-        .${"text-3xl"}[style], .${"sm:text-5xl"}[style] {
+        /* Salvaguardia: evita che ancestor con text-transparent/clip rompa il titolo */
+        .cc-title-blue{
           background-image: none !important;
           -webkit-background-clip: initial !important;
           background-clip: initial !important;
           opacity: 1 !important;
           mix-blend-mode: normal !important;
+        }
+        /* Garantisce che lo span oro resti oro anche con fill impostati a livello parent */
+        .cc-gold{
+          color: var(--gold) !important;
+          -webkit-text-fill-color: var(--gold) !important;
         }
       `}</style>
     </div>
