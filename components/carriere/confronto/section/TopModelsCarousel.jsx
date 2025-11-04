@@ -1,25 +1,19 @@
 "use client";
 
 import React, { useMemo, useRef, useState, useEffect, useCallback } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import SectionHeader, { SectionP } from "@/common/section/SectionHeader";
 import { MODELS, expectedScore } from "@/components/carriere/confronto/data";
 import { ButtonGhost } from "@/common/section/Buttons";
 import { ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import ModelModal from "./ModelModal";
 
-/** TopModelsCarousel — compatto, scroller pulito, modal separato */
+/** TopModelsCarousel — LIGHT THEME */
 export default function TopModelsCarousel({
   id = "modelli",
   title = "Panoramica rapida — modelli a confronto",
   desc = "Scorri le 4 card più rilevanti per capire trend e trade-off.",
-  headerTone = "dark",
+  headerTone = "light", // 👈 (prima era "dark")
 }) {
   /* ===== DATI ===== */
   const enriched = useMemo(() => {
@@ -44,17 +38,14 @@ export default function TopModelsCarousel({
   const trackRef = useRef(null);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(true);
-
   const [dragEnabled, setDragEnabled] = useState(false);
   useEffect(() => {
     const coarse = typeof window !== "undefined" && window.matchMedia?.("(pointer: coarse)")?.matches;
     setDragEnabled(!coarse);
   }, []);
-
   const suppressClickRef = useRef(false);
   const dragStartXRef = useRef(0);
   const dragStartYRef = useRef(0);
-
   const [active, setActive] = useState(null);
   useEffect(() => {
     if (!active) return;
@@ -62,7 +53,6 @@ export default function TopModelsCarousel({
     document.documentElement.style.overflow = "hidden";
     return () => { document.documentElement.style.overflow = prev; };
   }, [active]);
-
   useEffect(() => {
     const onKey = (e) => { if (e.key === "Escape") setActive(null); };
     window.addEventListener("keydown", onKey);
@@ -75,11 +65,9 @@ export default function TopModelsCarousel({
     const scroller = scrollerRef.current;
     const track = trackRef.current;
     if (!scroller || !track) return;
-
     const cards = track.querySelectorAll("article[data-card]");
     const target = cards[centerIndex] || cards[0];
     if (!target) return;
-
     const scRect = scroller.getBoundingClientRect();
     const elRect = target.getBoundingClientRect();
     const current = scroller.scrollLeft;
@@ -146,7 +134,7 @@ export default function TopModelsCarousel({
   }
 
   /* ===== DRAG ===== */
-  const DRAG_SUPPRESS_THRESHOLD = 10; // px
+  const DRAG_SUPPRESS_THRESHOLD = 10;
   const onDragStart = (_, info) => {
     dragStartXRef.current = info?.point?.x ?? 0;
     dragStartYRef.current = info?.point?.y ?? 0;
@@ -167,7 +155,7 @@ export default function TopModelsCarousel({
   };
 
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="relative py-12 sm:py-16 md:py-20">
+    <section id={id} aria-labelledby={`${id}-title`} className="relative py-12 sm:py-16 md:py-20 bg-white">
       <div className="container">
         <SectionHeader
           id={`${id}-title`}
@@ -178,7 +166,7 @@ export default function TopModelsCarousel({
           className="mb-4 sm:mb-5 text-center"
         />
         <div className="mx-auto mb-8 max-w-[76ch] text-center">
-          <SectionP className="text-white/90">{desc}</SectionP>
+          <SectionP className="text-slate-700">{desc}</SectionP>
         </div>
 
         <div className="relative">
@@ -187,7 +175,7 @@ export default function TopModelsCarousel({
             <button
               onClick={() => scrollByCards(-1)}
               disabled={!canLeft}
-              className="pointer-events-auto inline-flex items-center rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-sm text-white/90 hover:bg-white/15 disabled:opacity-30"
+              className="pointer-events-auto inline-flex items-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 hover:bg-slate-50 disabled:opacity-30"
               aria-label="Scorri a sinistra"
               type="button"
             >
@@ -196,7 +184,7 @@ export default function TopModelsCarousel({
             <button
               onClick={() => scrollByCards(1)}
               disabled={!canRight}
-              className="pointer-events-auto inline-flex items-center rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-sm text-white/90 hover:bg-white/15 disabled:opacity-30"
+              className="pointer-events-auto inline-flex items-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 hover:bg-slate-50 disabled:opacity-30"
               aria-label="Scorri a destra"
               type="button"
             >
@@ -204,7 +192,7 @@ export default function TopModelsCarousel({
             </button>
           </div>
 
-          {/* SCROLLER (pulito: niente ombre/fade) */}
+          {/* SCROLLER */}
           <div
             ref={scrollerRef}
             className="-mx-4 overflow-x-auto overscroll-x-contain snap-x snap-mandatory px-4 pb-2 [scrollbar-width:none] [-ms-overflow-style:none] touch-pan-x focus:outline-none"
@@ -227,29 +215,24 @@ export default function TopModelsCarousel({
               className="flex gap-4 sm:gap-5 md:gap-6"
             >
               {items.map((m, i) => (
-                <SmallCard
-                  key={m.key || m.id || `${m.name}-${i}`}
-                  model={m}
-                  index={i}
-                  onOpen={() => setActive(m)}
-                />
+                <SmallCard key={m.key || m.id || `${m.name}-${i}`} model={m} index={i} onOpen={() => setActive(m)} />
               ))}
             </motion.div>
           </div>
         </div>
 
-        <p className="mt-6 text-center text-xs text-white/60">
+        <p className="mt-6 text-center text-xs text-slate-500">
           Il punteggio aggrega provvigione, spese, premi e supporto. Per il confronto completo apri la tabella.
         </p>
       </div>
 
-      {/* scrollbar hidden + stabilità snap iOS */}
+      {/* scrollbar hidden */}
       <style jsx>{`
         :global(#${id} ::-webkit-scrollbar) { display: none; }
         :global(.snap-mandatory) { scroll-snap-type: x mandatory; }
       `}</style>
 
-      {/* MODAL separato */}
+      {/* MODAL */}
       <AnimatePresence>
         {active && <ModelModal model={active} onClose={() => setActive(null)} />}
       </AnimatePresence>
@@ -257,38 +240,25 @@ export default function TopModelsCarousel({
   );
 }
 
-/* ================= CARD COMPATTA ================= */
+/* ================= CARD COMPATTA — LIGHT ================= */
 function SmallCard({ model, index, onOpen }) {
+  const ref = useRef(null);
   const prefersReduced =
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
-  const ref = useRef(null);
-  const mouseX = useMotionValue(0.5);
-  const mouseY = useMotionValue(0.5);
-  const rotateX = useSpring(useTransform(mouseY, [0, 1], [2, -2]), { stiffness: 120, damping: 16 });
-  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-4, 4]), { stiffness: 120, damping: 16 });
-
-  const onMove = (e) => {
-    if (prefersReduced) return;
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    mouseX.set(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)));
-    mouseY.set(Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height)));
-  };
+  const mouseX = useRef(0.5);
+  const mouseY = useRef(0.5);
+  const open = () => onOpen?.(model);
+  const onKey = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } };
 
   const barProv = clamp01(model.provNum);
   const barGain = clamp01(model.guadNum);
-
-  const open = () => onOpen?.(model);
-  const onKey = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } };
 
   return (
     <motion.article
       ref={ref}
       data-card
-      onMouseMove={onMove}
-      onMouseLeave={() => { mouseX.set(0.5); mouseY.set(0.5); }}
       initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
       whileHover={{ y: -1 }}
@@ -298,53 +268,41 @@ function SmallCard({ model, index, onOpen }) {
         group relative snap-center
         min-w-[90%] xs:min-w-[80%] sm:min-w-[64%] lg:min-w-[42%] xl:min-w-[34%]
         max-w-[460px]
-        overflow-hidden rounded-2xl border border-white/10 bg-[rgba(12,16,24,.78)]
-        focus:outline-none focus:ring-2 focus:ring-white/20
+        overflow-hidden rounded-2xl border border-slate-200 bg-white
+        focus:outline-none focus:ring-2 focus:ring-slate-300
+        shadow-sm
       "
-      style={{
-        transformStyle: "preserve-3d",
-        ...(prefersReduced ? {} : { rotateX, rotateY }),
-        cursor: "pointer",
-        boxShadow: "none", // scroller pulito
-      }}
+      style={{ cursor: "pointer" }}
       aria-label={`Modello ${model.name}, score ${model.score.toFixed(1)}. Clic per dettagli.`}
       tabIndex={0}
       role="button"
       onClick={open}
       onKeyDown={onKey}
     >
-      {/* Desktop: SOLO testo invito */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute right-3 top-3 z-[10] hidden md:flex items-center gap-1 rounded-md bg-black/30 px-2 py-1 text-[11px] text-white/85 ring-1 ring-white/15 backdrop-blur opacity-0 transition-opacity group-hover:opacity-100"
-      >
-        <span>Apri dettagli</span>
-      </div>
-
-      {/* Mobile: SOLO icona */}
+      {/* Mobile: icona espandi */}
       <button
         type="button"
         aria-label="Apri dettagli"
         onClick={(e) => { e.stopPropagation(); open(); }}
-        className="absolute right-2 top-2 z-10 inline-flex items-center justify-center rounded-md bg-black/30 p-1.5 ring-1 ring-white/20 backdrop-blur md:hidden"
+        className="absolute right-2 top-2 z-10 inline-flex items-center justify-center rounded-md bg-white/90 p-1.5 ring-1 ring-slate-200 md:hidden"
       >
-        <Maximize2 className="h-4 w-4 text-white" />
+        <Maximize2 className="h-4 w-4 text-slate-800" />
       </button>
 
-      {/* Media davvero compatta */}
+      {/* Media */}
       <MediaBlock model={model} />
 
-      {/* Body compatto */}
+      {/* Body */}
       <div className="relative z-[1] grid gap-2.5 p-3.5 sm:p-4">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <h3 className="truncate text-base sm:text-lg font-semibold tracking-[-0.01em]">{model.name}</h3>
-            <p className="mt-0.5 line-clamp-2 text-[13px] text-white/70">{model.sintesi}</p>
+            <h3 className="truncate text-base sm:text-lg font-semibold tracking-[-0.01em] text-slate-900">{model.name}</h3>
+            <p className="mt-0.5 line-clamp-2 text-[13px] text-slate-600">{model.sintesi}</p>
           </div>
           <Gauge value={model.score} />
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[12px] sm:text-[12px]">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[12px]">
           <Chip label="% Provvigione" value={model.provvigionePct} />
           <Chip label="Spese" value={model.spese} />
           <Chip label="% Guadagno" value={model.guadagnoPct} />
@@ -356,46 +314,45 @@ function SmallCard({ model, index, onOpen }) {
           <Bar label="Guadagno" value={barGain} hint={model.guadagnoPct} tone="gold" compact />
         </div>
 
-        <div className="grid gap-1.5 pt-0.5 text-[13px] text-white/85">
+        <div className="grid gap-1.5 pt-0.5 text-[13px] text-slate-700">
           <Row label="Supporto" value={model.supporto} />
           <Row label="Formazione" value={model.formazione} />
         </div>
 
-        <div className="mt-1 flex flex-wrap gap-2" onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()}>
-          <ButtonGhost as="a" href="#confronto-table-title" className="!px-3.5 !py-1.5 !text-[12px]">Apri tabella</ButtonGhost>
+        <div className="mt-1 flex flex-wrap gap-2">
+          <ButtonGhost as="a" href="#confronto-table-title" className="!px-3.5 !py-1.5 !text-[12px]">
+            Apri tabella
+          </ButtonGhost>
         </div>
       </div>
     </motion.article>
   );
 }
 
-/* ================= MEDIA BLOCK (h-24 compatto) ================= */
 function MediaBlock({ model }) {
   const [failed, setFailed] = useState(false);
   const src = !failed ? model.image || model.logo || null : null;
   return (
-    <div className="relative h-24 w-full bg-white/5">
+    <div className="relative h-24 w-full bg-slate-50">
       {src ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={src} alt={model.name} onError={() => setFailed(true)} className="h-full w-full object-cover" />
       ) : (
-        <div className="flex h-full w-full items-center justify-start bg-gradient-to-br from-[#1D2D5E] to-[#0B1220] px-3">
-          <div className="rounded bg-white/10 px-2 py-0.5 text-[11px] text-white/85 ring-1 ring-white/15">{model.name}</div>
+        <div className="flex h-full w-full items-center justify-start bg-gradient-to-br from-slate-100 to-slate-200 px-3">
+          <div className="rounded bg-white px-2 py-0.5 text-[11px] text-slate-700 ring-1 ring-slate-200">{model.name}</div>
         </div>
       )}
-      {/* nessuna sfumatura/ombra */}
     </div>
   );
 }
 
-/* ================= SHARED UI (compatti) ================= */
 function Gauge({ value }) {
   const v = Math.max(0, Math.min(100, value || 0));
   const r = 16, c = 2 * Math.PI * r, dash = c * (v / 100);
   return (
     <div className="grid place-items-center">
       <svg width="50" height="50" viewBox="0 0 50 50" role="img" aria-label={`Score ${v.toFixed(1)}`}>
-        <circle cx="25" cy="25" r={r} stroke="rgba(255,255,255,.15)" strokeWidth="5" fill="none" />
+        <circle cx="25" cy="25" r={r} stroke="rgba(2,6,23,.12)" strokeWidth="5" fill="none" />
         <circle cx="25" cy="25" r={r} stroke="url(#gsmall)" strokeWidth="5" fill="none" strokeLinecap="round"
                 strokeDasharray={`${dash} ${c - dash}`} transform="rotate(-90 25 25)" />
         <defs>
@@ -404,39 +361,39 @@ function Gauge({ value }) {
             <stop offset="100%" stopColor="rgba(201,168,110,.9)" />
           </linearGradient>
         </defs>
-        <text x="50%" y="52%" textAnchor="middle" className="fill-white/90 text-[11px] font-semibold">{v.toFixed(1)}</text>
+        <text x="50%" y="52%" textAnchor="middle" className="fill-slate-800 text-[11px] font-semibold">{v.toFixed(1)}</text>
       </svg>
     </div>
   );
 }
 function Chip({ label, value }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-white/6 px-2 py-0.5 text-[11px] text-white/85 ring-1 ring-white/10">
-      <Dot /> <b className="text-white/95">{label}:</b> {value}
+    <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 ring-1 ring-slate-200">
+      <Dot /> <b className="text-slate-900">{label}:</b> {value}
     </span>
   );
 }
 function Row({ label, value }) {
   return (
     <div className="flex items-start justify-between gap-3">
-      <span className="text-white/70">{label}</span>
-      <span className="text-right">{value}</span>
+      <span className="text-slate-500">{label}</span>
+      <span className="text-right text-slate-800">{value}</span>
     </div>
   );
 }
 function Bar({ label, value, hint, tone = "blue", compact = true }) {
   return (
     <div>
-      <div className="mb-0.5 flex items-center justify-between text-[11px] text-white/70">
+      <div className="mb-0.5 flex items-center justify-between text-[11px] text-slate-500">
         <span>{label}</span>
-        <span className="tabular-nums text-white/80">{hint}</span>
+        <span className="tabular-nums text-slate-700">{hint}</span>
       </div>
-      <div className={"relative overflow-hidden rounded-full bg-white/10 ring-1 ring-white/10 " + (compact ? "h-[6px]" : "h-2")}>
+      <div className={"relative overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-200 " + (compact ? "h-[6px]" : "h-2")}>
         <div className="h-full" style={{
-          width: `${(value * 100).toFixed(0)}%`,
-          background: tone === "gold" ? "linear-gradient(90deg, rgba(201,168,110,.35), rgba(201,168,110,.85))"
-                                      : "linear-gradient(90deg, rgba(29,45,94,.35), rgba(29,45,94,.9))",
-          boxShadow: "none",
+          width: `${(Math.max(0, Math.min(1, value)) * 100).toFixed(0)}%`,
+          background: tone === "gold"
+            ? "linear-gradient(90deg, rgba(201,168,110,.35), rgba(201,168,110,.85))"
+            : "linear-gradient(90deg, rgba(29,45,94,.30), rgba(29,45,94,.85))",
         }} />
       </div>
     </div>
@@ -444,22 +401,10 @@ function Bar({ label, value, hint, tone = "blue", compact = true }) {
 }
 function Dot() { return <span aria-hidden className="inline-block h-[6px] w-[6px] rounded-full" style={{ background: "var(--gold)" }} />; }
 
-/* ================= UTILS ================= */
-function pctToNum(str) {
-  if (!str) return 0;
-  const s = String(str).replace(",", ".").toLowerCase();
-  if (s.includes("oltre")) return 1.1;
-  const m1 = s.match(/(\d+(?:\.\d+)?)\s*%?\s*[–-]\s*(\d+(?:\.\d+)?)\s*%/);
-  if (m1) return ((+m1[1] + +m1[2]) / 2) / 100;
-  const m2 = s.match(/(~?\s*)(\d+(?:\.\d+)?)\s*%/);
-  if (m2) return +m2[2] / 100;
-  return 0;
-}
-function speseToNum(str) {
-  if (!str) return 0;
-  const n = String(str).replace(/[^\d–-]/g, "").split(/[–-]/).map(Number);
-  if (n.length === 1) return n[0] || 0;
-  if (n.length >= 2) return (n[0] + n[1]) / 2;
-  return 0;
-}
-function clamp01(n) { return Math.max(0, Math.min(1, n || 0)); }
+/* UTILS */
+function pctToNum(str){ if(!str) return 0; const s=String(str).replace(",",".").toLowerCase(); if(s.includes("oltre")) return 1.1;
+  const m1=s.match(/(\d+(?:\.\d+)?)\s*%?\s*[–-]\s*(\d+(?:\.\d+)?)\s*%/); if(m1) return ((+m1[1]+ +m1[2])/2)/100;
+  const m2=s.match(/(~?\s*)(\d+(?:\.\d+)?)\s*%/); if(m2) return +m2[2]/100; return 0;}
+function speseToNum(str){ if(!str) return 0; const n=String(str).replace(/[^\d–-]/g,"").split(/[–-]/).map(Number);
+  if(n.length===1) return n[0]||0; if(n.length>=2) return (n[0]+n[1])/2; return 0;}
+function clamp01(n){ return Math.max(0, Math.min(1, n||0)); }
