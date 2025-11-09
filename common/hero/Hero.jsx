@@ -212,11 +212,12 @@ export default function Hero({
   return (
     <section
       id={id}
-      className="relative isolate overflow-hidden hero-light lg:h-[var(--hero-h,78vh)] lg:pt-[var(--hero-top,20px)]"
+      className="relative isolate overflow-hidden lg:h-[var(--hero-h,78vh)] lg:pt-[var(--hero-top,20px)]"
       aria-label={ariaLabel}
       style={{
-        ["--hero-h"]: "78vh",
-        ["--hero-top"]: "20px",
+        background: "linear-gradient(180deg, #060B18 0%, #050A14 100%)",
+        ["--hero-h"]: "78vh",   // altezza fissa desktop
+        ["--hero-top"]: "20px", // piccolo margine sopra
       }}
     >
       {/* progress top — solo desktop */}
@@ -227,14 +228,19 @@ export default function Hero({
         />
       )}
 
-      {/* LAYER MEDIA */}
-      <div className="absolute inset-x-0 bottom-0 z-0" aria-hidden style={{ top: "var(--hero-top, 20px)" }}>
+      {/* LAYER MEDIA — Desktop: area dall’offset top al fondo (h=hero-top→hero-bottom) */}
+      <div
+        className="absolute inset-x-0 bottom-0 z-0"
+        aria-hidden
+        style={{ top: "var(--hero-top, 20px)" }}
+      >
         {isSmall ? (
           <div className="pointer-events-none absolute inset-x-0 bottom-0">
             <MobileMedia />
           </div>
         ) : (
           <div className="pointer-events-none absolute inset-y-0 right-0">
+            {/* frame media: occupa TUTTA l’altezza utile; IMPORTANTISSIMO: relative+h-full */}
             <div className="relative h-full" style={{ width: "clamp(560px, 58vw, 1120px)" }}>
               <DesktopMedia />
             </div>
@@ -264,7 +270,9 @@ export default function Hero({
         </div>
       ) : (
         <div className="relative z-[3]">
+          {/* Altezza utile = hero-h - hero-top */}
           <div className="container mx-auto px-4 sm:px-6 lg:min-h-[calc(var(--hero-h,78vh)-var(--hero-top,20px))]">
+            {/* COPY CENTRATO VERTICALMENTE: min-h-full + flex justify-center */}
             <div className="grid min-h-full gap-x-6 gap-y-7 md:gap-x-10 md:gap-y-8 md:grid-cols-[minmax(0,1fr)_520px]">
               <div className="flex flex-col justify-center">
                 <HeroCopyDesktop
@@ -291,28 +299,6 @@ export default function Hero({
         .title-balance { text-wrap: balance; white-space: normal; word-break: normal; overflow-wrap: break-word; }
         @supports not (text-wrap: balance) { .title-balance { overflow-wrap: break-word; } }
         @keyframes heroZoom { 0% { transform: scale(1); } 50% { transform: scale(1.06); } 100% { transform: scale(1); } }
-
-        /* === Sfondo bianco "sporco" (solo tonalità) ===
-           - base #fff
-           - lievi radial gradient ai bordi per profondità
-           - piccola vignetta chiarissima
-        */
-        .hero-light {
-          background:
-            radial-gradient(120% 90% at 0% 0%, rgba(0,0,0,0.05), transparent 60%),
-            radial-gradient(120% 90% at 100% 0%, rgba(0,0,0,0.04), transparent 62%),
-            radial-gradient(100% 80% at 50% 120%, rgba(0,0,0,0.05), transparent 65%),
-            #ffffff;
-        }
-        .hero-light::after{
-          content:"";
-          position:absolute; inset:0; pointer-events:none;
-          background:
-            radial-gradient(140% 120% at 50% 20%, rgba(0,0,0,0.04), transparent 60%),
-            radial-gradient(120% 120% at 50% 100%, rgba(0,0,0,0.03), transparent 65%);
-          mix-blend-mode:multiply;
-          opacity:.75;
-        }
       `}</style>
     </section>
   );
