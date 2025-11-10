@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import Head from "next/head";
 import { motion, useScroll, useSpring, useReducedMotion } from "framer-motion";
 
 import Header from "@/common/layout/Header";
@@ -20,12 +21,20 @@ import CompPlanShowcase from "@/components/home/CompPlanShowcase";
 import OfferStack from "@/components/home/OfferStack";
 
 // ------- SEO/OG -------
-import HomeSEO from "@/components/home/seo";
+const SITE_NAME = "Casa Corporation — Carriere";
+const DEFAULT_TITLE = "Carriere — Casa Corporation";
+const DEFAULT_DESC =
+  "Percorsi chiari, strumenti proprietari e meritocrazia. Costruisci la tua carriera nel Real Estate con Casa Corporation.";
+const DEFAULT_IMAGE = "/carriere/og.png";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.holdingcasacorporation.it";
+const CANONICAL = `${SITE_URL}/`;
 
 /** Inietta un <style> come ULTIMO nel <head> (vince su tutto) */
 function ForceHeadingsVisible() {
   useEffect(() => {
     const id = "cc-force-headings-ultimate";
+    // ripulisci eventuale precedente
     const prev = document.getElementById(id);
     if (prev) prev.remove();
 
@@ -63,6 +72,41 @@ function ForceHeadingsVisible() {
   return null;
 }
 
+function JsonLd() {
+  const json = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}#org`,
+        name: "Casa Corporation",
+        url: SITE_URL,
+        logo: `${SITE_URL}/og/logo.png`,
+        brand: "Casa Corporation",
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}#website`,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: { "@id": `${SITE_URL}#org` },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: `${SITE_URL}/search?q={query}`,
+          "query-input": "required name=query",
+        },
+        inLanguage: "it-IT",
+      },
+    ],
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+    />
+  );
+}
+
 // ------- Progress bar scroll -------
 function ScrollProgress() {
   const prefersReducedMotion = useReducedMotion();
@@ -94,8 +138,27 @@ function SectionTone({ tone = "dark", id, children }) {
 export default function CareersIndex() {
   return (
     <>
-      {/* SEO centralizzato */}
-      <HomeSEO />
+      <Head>
+        <title>{DEFAULT_TITLE}</title>
+        <meta name="description" content={DEFAULT_DESC} />
+        <link rel="canonical" href={CANONICAL} />
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#0B142E" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={SITE_NAME} />
+        <meta property="og:title" content={DEFAULT_TITLE} />
+        <meta property="og:description" content={DEFAULT_DESC} />
+        <meta property="og:url" content={CANONICAL} />
+        <meta property="og:image" content={`${SITE_URL}${DEFAULT_IMAGE}`} />
+        <meta property="og:image:alt" content="Carriere — Casa Corporation" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={DEFAULT_TITLE} />
+        <meta name="twitter:description" content={DEFAULT_DESC} />
+        <meta name="twitter:image" content={`${SITE_URL}${DEFAULT_IMAGE}`} />
+        <link rel="alternate" hrefLang="it" href={CANONICAL} />
+        <JsonLd />
+      </Head>
 
       <CursorAura />
       <ScrollProgress />

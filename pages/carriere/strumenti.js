@@ -1,14 +1,13 @@
 // pages/carriere/strumenti.js
 "use client";
 
-
+import Head from "next/head";
 import Header from "@common/layout/Header";
 import Footer from "@common/layout/Footer";
 import LocalNav from "@common/nav/LocalNav";
 
 // HERO già presente nel progetto
 import HeroStrumenti from "@/components/carriere/strumenti/hero/hero";
-import SeoStrumenti from "@/components/carriere/strumenti/seo/seo";
 
 // Sezioni (con regole d'import tipografia)
 import Stack from "@/components/carriere/strumenti/section/Stack";
@@ -22,7 +21,11 @@ import FAQ from "@/components/carriere/strumenti/section/FAQ";
 import CTAUltra from "@/common/section/CTAUltra";
 
 export default function CareerToolsPage() {
- 
+  const ORG = "Casa Corporation";
+  const title = "Lavora con noi — Strumenti";
+  const description =
+    "CRM proprietario, pipeline non aggirabili, dashboard KPI, integrazioni native e automazioni. Strumenti concreti per lavorare meglio.";
+  const canonical = "https://www.casacorporation.it/carriere/strumenti";
 
   const NAV_ITEMS = [
     { id: "suite", label: "Suite" },             // alias: include ancora #stack
@@ -33,12 +36,17 @@ export default function CareerToolsPage() {
     { id: "faq", label: "FAQ" },
     { id: "cta", label: "Candidati" },
   ];
-//non riceve immagine og del seo
+
   return (
     <>
-          {/* SEO centralizzato (OG, canonical, JSON-LD) */}
-
-      <SeoStrumenti />
+      <Head>
+        <title>{title} | {ORG}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <meta property="og:title" content={`${title} | ${ORG}`} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+      </Head>
 
       <main className="strumenti min-h-screen text-white">
         <Header />

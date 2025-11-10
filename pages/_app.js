@@ -11,7 +11,7 @@ import SEO from "@common/seo/SEO";
 
 // I pezzi che possono toccare window/DOM li carichiamo client-only
 const GSAPProvider = dynamic(() => import("@common/ux/GSAPProvider"), { ssr: false });
-const PageTransition = dynamic(() => import("@common/ux/PageTransition"), { ssr: true });
+const PageTransition = dynamic(() => import("@common/ux/PageTransition"), { ssr: false });
 const ScrollProgressBar = dynamic(() => import("@common/ux/ScrollProgressBar"), { ssr: false });
 
 export default function MyApp({ Component, pageProps }) {
@@ -36,4 +36,3 @@ export default function MyApp({ Component, pageProps }) {
     </>
   );
 }
-//pre disastro gti

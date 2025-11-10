@@ -1,9 +1,7 @@
 /* Tailwind v4 */
 @import "tailwindcss";
 
-/* =========================================
-   THEME TOKENS
-========================================= */
+/* === Theme tokens === */
 @theme {
   --color-brand: #1D2D5E;
   --color-brand-dark: #0A1024;
@@ -12,27 +10,25 @@
   --shadow-gold: 0 10px 30px -12px rgb(201 168 110 / 0.45);
 }
 
-/* =========================================
-   ROOT VARS (UNIFICATE)
-========================================= */
-:root {
+/* === Vars unificate === */
+:root{
   /* palette */
-  --brand: #1D2D5E;
-  --brand-dark: #0A1024;
-  --gold: #C9A86E;
-  --gold-400: #E7D2A4;
+  --brand:#1D2D5E;
+  --brand-dark:#0A1024;
+  --gold:#C9A86E;
+  --gold-400:#E7D2A4;
 
   /* alias/compat */
   --blue: var(--brand);
 
-  /* page theme (default dark) */
+  /* page theme (di default dark) */
   --page-bg: var(--brand-dark);
   --page-text: #ffffff;
 
   /* vetro */
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-stroke: rgba(255, 255, 255, 0.10);
-  --glass-stroke-strong: rgba(255, 255, 255, 0.16);
+  --glass-bg: rgba(255,255,255,0.05);
+  --glass-stroke: rgba(255,255,255,0.10);
+  --glass-stroke-strong: rgba(255,255,255,0.16);
 
   /* font stack (derivano da next/font in _document) */
   --ff-sans: var(--font-inter), system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
@@ -41,7 +37,7 @@
   /* Fallback altezza header */
   --header-h: 56px;
 
-  /* Hero metrics unificate */
+  /* === Hero metrics unificate === */
   --hero-pt: clamp(5.5rem, 7vw, 7rem);
   --hero-pb: clamp(2.5rem, 4vw, 3.5rem);
   --hero-media-w: clamp(320px, 44vw, 620px);
@@ -49,41 +45,41 @@
   --hero-media-top: -24px;
 }
 
-/* =========================================
-   THEMES WRAPPER
-========================================= */
-.theme-dark {
+/* Temi applicabili al wrapper pagina (es. <main class="theme-light">) */
+.theme-dark{
   --page-bg: var(--brand-dark);
   --page-text: #ffffff;
 }
-.theme-light {
+.theme-light{
   --page-bg: #ffffff;
   --page-text: #0b1023;
 }
 
-/* =========================================
-   BASE / RESET
-========================================= */
+/* Base layout: niente smooth globale (rompe i pin) */
 html, body, #__next {
   min-height: 100%;
   background: var(--page-bg);
   color: var(--page-text);
 }
-html, body { overflow-x: clip; } /* niente barra orizzontale */
+/* Niente barra orizzontale globale */
+html, body { overflow-x: clip; }
 
 body { font-family: var(--ff-sans); }
 .h-serif { font-family: var(--ff-serif); }
 
+/* Selection in oro (leggera) */
 ::selection {
   background: color-mix(in oklab, var(--gold) 26%, transparent);
 }
 
-img, svg, video, canvas { display: block; max-width: 100%; }
+/* Reset media soft */
+img, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+}
 video { height: auto; }
 
-/* =========================================
-   UTILITY
-========================================= */
+/* Utility */
 .glass { @apply bg-white/5 backdrop-blur border border-white/10; }
 .section { @apply py-20 sm:py-28; }
 .container { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
@@ -94,270 +90,48 @@ video { height: auto; }
   mask-image: radial-gradient(260px 260px at var(--x) var(--y), black 0%, transparent 60%);
 }
 
-/* Accenti oro (bordo + glow on hover) */
+/* Accenti oro */
 .gold-acc {
   position: relative;
   border: 1px solid var(--glass-stroke);
   background: var(--glass-bg);
 }
 .gold-acc::after {
-  content: "";
-  pointer-events: none;
-  position: absolute; inset: -1px;
-  border-radius: inherit;
+  content:"";
+  pointer-events:none;
+  position:absolute; inset:-1px;
+  border-radius:inherit;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0;
-  transition: opacity .25s ease;
+  opacity:.0; transition:opacity .25s ease;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 1px;
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  padding:1px;
 }
-.gold-acc:hover::after { opacity: .55; }
+.gold-acc:hover::after { opacity:.55; }
 
 /* Scrollbar utility (mobile) */
 .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-none::-webkit-scrollbar { display: none; }
 
-/* =========================================
-   HERO MEDIA (MOBILE)
-========================================= */
-.hero-mobile-media {
-  aspect-ratio: 100 / 46;
+/* === Hero media mobile (spostato qui per centralizzare) === */
+.hero-mobile-media{
+  aspect-ratio: 100 / 46; /* come prima */
   max-height: 320px;
 }
-@media (orientation: landscape) and (max-width: 768px) {
-  .hero-mobile-media {
+@media (orientation: landscape) and (max-width: 768px){
+  .hero-mobile-media{
     aspect-ratio: 100 / 40;
     max-height: 280px;
   }
 }
 
-/* =========================================
-   TAILWIND PLUGINS
-========================================= */
+/* Plugin Tailwind v4 (se usi le utility) */
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/aspect-ratio";
 
-/* =========================================
-   ACCESSIBILITY (reduced motion)
-========================================= */
+/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
-<<<<<<< HEAD
-=======
-
-/* =========================================
-   MEDIAZIONE LIGHT THEME — OVERRIDES
-   (non invasivi, remap su classi note)
-========================================= */
-
-/* Remap testi bianchi → blu brand (conservando le opacità) */
-.theme-light .text-white{ color: var(--color-brand) !important; }
-.theme-light .text-white\/95{ color: color(from var(--color-brand) srgb r g b / 0.95) !important; }
-.theme-light .text-white\/92{ color: color(from var(--color-brand) srgb r g b / 0.92) !important; }
-.theme-light .text-white\/90{ color: color(from var(--color-brand) srgb r g b / 0.90) !important; }
-.theme-light .text-white\/88{ color: color(from var(--color-brand) srgb r g b / 0.88) !important; }
-.theme-light .text-white\/85{ color: color(from var(--color-brand) srgb r g b / 0.85) !important; }
-.theme-light .text-white\/80{ color: color(from var(--color-brand) srgb r g b / 0.80) !important; }
-.theme-light .text-white\/75{ color: color(from var(--color-brand) srgb r g b / 0.75) !important; }
-.theme-light .text-white\/72{ color: color(from var(--color-brand) srgb r g b / 0.72) !important; }
-.theme-light .text-white\/70{ color: color(from var(--color-brand) srgb r g b / 0.70) !important; }
-.theme-light .text-white\/65{ color: color(from var(--color-brand) srgb r g b / 0.65) !important; }
-.theme-light .text-white\/60{ color: color(from var(--color-brand) srgb r g b / 0.60) !important; }
-.theme-light .text-white\/50{ color: color(from var(--color-brand) srgb r g b / 0.50) !important; }
-.theme-light .text-white\/45{ color: color(from var(--color-brand) srgb r g b / 0.45) !important; }
-
-/* Background scuro → bianco */
-.theme-light .bg-\[var\(--brand-dark\)\] { background-color: #ffffff !important; }
-
-/* Icone/bordi bianchi → blu brand */
-.theme-light .border-white { border-color: var(--color-brand) !important; }
-.theme-light .fill-white { fill: var(--color-brand) !important; }
-.theme-light .stroke-white { stroke: var(--color-brand) !important; }
-
-/* Link + focus ring coerenti col brand */
-.theme-light a { color: var(--color-brand); }
-.theme-light :where(:focus-visible) { outline-color: var(--color-brand); }
-
-/* =========================================
-   HERO: LIGHT THEME HARD FIX
-========================================= */
-.theme-light #hero-careers,
-#hero-careers {
-  color: var(--color-brand) !important;
-}
-#hero-careers h1,
-#hero-careers h1 span {
-  color: var(--color-brand) !important;
-}
-#hero-careers .text-gold {
-  color: var(--gold) !important;
-}
-
-/* === HERO — leggibilità senza overlay: radial mask sull'immagine ========= */
-/* slider rapidi (tarali a occhio) */
-:root{
-  --hero-mask-rx: 56vw;      /* raggio orizzontale della maschera */
-  --hero-mask-ry: 38vh;      /* raggio verticale */
-  --hero-mask-y:  42%;       /* posizione verticale del centro (40–48%) */
-  --hero-center-dim: .35;    /* 0=trasparente (nasconde), 1=nessuna attenuazione; .30–.45 perfetto */
-  --hero-img-opacity: .76;   /* presenza generale immagine .70–.82 */
-}
-
-/* 1) Applica una MASCHERA alla sola immagine (niente overlay sopra al testo) */
-#hero-careers .fx-on-light{
-  opacity: var(--hero-img-opacity) !important;
-  mix-blend-mode: normal !important;
-  filter:
-    brightness(1.02)
-    contrast(1.10)
-    saturate(1.08)
-    drop-shadow(0 12px 28px rgba(0,0,0,.12));
-
-  /* Maschera radiale: al centro l'immagine è attenuata, ai bordi piena */
-  -webkit-mask-image: radial-gradient(
-    var(--hero-mask-rx) var(--hero-mask-ry) at 50% var(--hero-mask-y),
-    rgba(0,0,0, var(--hero-center-dim)),  /* centro: attenuato (non buco) */
-    rgba(0,0,0, 1) 68%                    /* bordi: pieni */
-  );
-  mask-image: radial-gradient(
-    var(--hero-mask-rx) var(--hero-mask-ry) at 50% var(--hero-mask-y),
-    rgba(0,0,0, var(--hero-center-dim)),
-    rgba(0,0,0, 1) 68%
-  );
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-}
-
-/* 2) Togli rumore di fondo: il video non compete più */
-#hero-careers video{ opacity: .02 !important; } /* o display:none; se preferisci */
-
-/* 3) Micro-stacco “ottico” del titolo (senza contorni pesanti) */
-#hero-careers h1{
-  text-shadow:
-    0 1px 2px rgba(255,255,255,.45), /* schiarisce i bordi su zone leggermente scure */
-    0 0 1px rgba(0,0,0,.12);
-}
-#hero-careers h1 .text-gold{
-  color: color-mix(in oklab, var(--gold) 92%, #3f2f08 8%) !important;
-  text-shadow:
-    0 1px 1px rgba(255,255,255,.45),
-    0 0 12px rgba(212,175,55,.22);
-}
-
-/* 4) Descrizione un filo più leggibile (resta blu brand) */
-#hero-careers p{
-  color: color-mix(in oklab, var(--color-brand) 90%, #0b0f1e 10%) !important;
-}
-
-/* === GOLD LEGIBILITY — same brand color, better edge =================== */
-/* slider minimi se vuoi ritoccare la forza degli effetti */
-:root{
-  --gold-edge-dark: .38;   /* 0.28–.48: contorno scuro (brand-dark) */
-  --gold-edge-light: .40;  /* 0.26–.46: filo chiaro per stacco */
-  --gold-glow-soft: .22;   /* .16–.28: alone morbido dorato */
-}
-
-/* Mantieni il colore ESATTO di brand (nessun gradient, niente mix) */
-#hero-careers h1 .text-gold{
-  color: var(--gold) !important;
-
-  /* micro-contorno scuro (derivato dal brand-dark) */
-  -webkit-text-stroke: 0.45px rgba(10,16,36, var(--gold-edge-dark));
-
-  /* ombre leggere che non cambiano la tinta */
-  text-shadow:
-    0 1px 0 rgba(255,255,255, var(--gold-edge-light)),   /* filo chiaro ottico */
-    0 0 18px rgba(201,168,110, var(--gold-glow-soft));   /* glow dorato soft */
-
-  /* un filo di presenza senza virare colore */
-  filter: saturate(1.00) contrast(1.04);
-}
-
-/* Per il resto del titolo blu: stacco minimo, no viraggi */
-#hero-careers h1{
-  text-shadow: 0 0 0.35px rgba(0,0,0,.16);
-}
-
-/* Mobile: caratteri più piccoli → bordo un pelo più deciso */
-@media (max-width: 640px){
-  #hero-careers h1 .text-gold{
-    -webkit-text-stroke: 0.55px rgba(10,16,36, calc(var(--gold-edge-dark) + .06));
-    text-shadow:
-      0 1px 0 rgba(255,255,255, calc(var(--gold-edge-light) + .06)),
-      0 0 18px rgba(201,168,110, calc(var(--gold-glow-soft) + .04));
-  }
-}
-/* === HERO — Title Aura (banda organica, non-rettangolare) ============== */
-/* knobs rapidi */
-:root{
-  --aura-bright: .78;   /* 0.64–0.84: luminosità dell’aura */
-  --aura-warm:   .06;   /* 0–.10: quanto “oro” miscelato nell’aura */
-  --aura-blur:   6px;   /* 3–10px: morbidezza (backdrop-filter) */
-}
-
-#hero-careers h1{
-  position: relative;
-  display: inline-block;          /* segue larghezza del testo */
-  isolation: isolate;
-  padding: 0 .8em;                /* respiro laterale minimo */
-  z-index: 1;
-}
-
-/* Aura organica: somma di ellissi sfumate (no rettangolo pieno) */
-#hero-careers h1::before{
-  content:"";
-  position:absolute;
-  z-index:-1;                     /* dietro al testo, davanti all’immagine */
-  left: 50%; top: 50%;
-  transform: translate(-50%,-50%);
-  width: 108%;                    /* un filo più larga del testo */
-  height: calc(100% + .62em);     /* un filo più alta */
-  pointer-events:none;
-
-  /* 5 “macchie” soffici che si sommano: centro + spalle */
-  background:
-    radial-gradient( 38% 120% at 50% 50%, rgba(255,255,255,var(--aura-bright)), transparent 72%),
-    radial-gradient( 26% 70%  at 14% 52%, rgba(255,255,255,var(--aura-bright)), transparent 70%),
-    radial-gradient( 26% 70%  at 86% 48%, rgba(255,255,255,var(--aura-bright)), transparent 70%),
-
-    /* lieve calore per favorire l’oro (quasi impercettibile) */
-    radial-gradient( 34% 120% at 50% 56%, rgba(201,168,110,var(--aura-warm)), transparent 78%),
-    radial-gradient( 22% 60%  at 70% 30%, rgba(201,168,110,calc(var(--aura-warm) * .7)), transparent 70%);
-
-  border-radius: 999px;           /* silhouette ovale, niente angoli */
-  -webkit-backdrop-filter: blur(var(--aura-blur)) saturate(.92);
-  backdrop-filter: blur(var(--aura-blur)) saturate(.92);
-  box-shadow:
-    0 6px 18px rgba(0,0,0,.08);   /* lift minimo */
-}
-
-/* Micro-stacco del titolo senza alterare i colori brand */
-#hero-careers h1{
-  text-shadow: 0 0 .35px rgba(0,0,0,.16);
-}
-#hero-careers h1 .text-gold{
-  color: var(--gold) !important;
-  -webkit-text-stroke: 0.35px rgba(10,16,36,.30); /* bordo neutro sottilissimo */
-  text-shadow:
-    0 1px 0 rgba(255,255,255,.38),
-    0 0 12px rgba(201,168,110,.18);
-}
-
-/* Mobile: aura un po’ più alta e morbida (immagine più “vicina”) */
-@media (max-width: 640px){
-  :root{ --aura-blur: 8px; --aura-bright: .82; }
-  #hero-careers h1::before{
-    width: 112%;
-    height: calc(100% + .78em);
-  }
-}
->>>>>>> 31790a04d8be79be4a8bb0ecc06630c2e143b4fa
