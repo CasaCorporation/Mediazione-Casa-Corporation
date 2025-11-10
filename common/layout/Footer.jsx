@@ -1,40 +1,17 @@
 "use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import NAV from "@/lib/nav";
-import { Mail, Phone, MapPin, ExternalLink, Lock } from "lucide-react";
+import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 
-/* ============== Utils ============== */
+/* Helpers */
 const norm = (s) => (s || "").toLowerCase().trim();
 const isHttp = (href) => /^https?:\/\//i.test(href || "");
 
-// Voce bloccata localmente
-function isGaraLive({ label, href }) {
-  const l = norm(label);
-  const h = norm(href);
-  return (l.includes("gara") && l.includes("live")) || h === "/carriere/gara-live";
-}
-
-/** Link smart: blocca Gara Live; esterni con target; altrimenti Link interno */
-function FooterLinkSmart({ sectionLabel, itemLabel, href, className = "", children }) {
-  const disabled = isGaraLive({ label: itemLabel || sectionLabel, href });
-  const external = !disabled && isHttp(href);
-
-  if (disabled) {
-    return (
-      <span
-        aria-disabled="true"
-        className={`inline-flex items-center gap-1.5 cursor-not-allowed select-none text-white/60 ${className}`}
-        title="Non disponibile"
-      >
-        <Lock className="h-3.5 w-3.5 opacity-70" aria-hidden="true" />
-        <span>{children}</span>
-      </span>
-    );
-  }
-
+/** Link smart: esterni con target; altrimenti Link interno */
+function FooterLinkSmart({ href, className = "", children }) {
+  const external = isHttp(href);
   if (external) {
     return (
       <a href={href} target="_blank" rel="noopener" className={`inline-flex items-center gap-1 ${className}`}>
@@ -43,7 +20,6 @@ function FooterLinkSmart({ sectionLabel, itemLabel, href, className = "", childr
       </a>
     );
   }
-
   return (
     <Link href={href || "#"} className={className}>
       {children}
@@ -51,7 +27,6 @@ function FooterLinkSmart({ sectionLabel, itemLabel, href, className = "", childr
   );
 }
 
-/** Sezioni dal NAV (solo root non esterni + figli/gruppi) */
 function buildSections(nav) {
   const roots = (nav || []).filter((i) => !i.external);
   return roots.map((root) => {
@@ -67,9 +42,7 @@ function buildSections(nav) {
         : [];
     return {
       title: root.label,
-      groups: root.groups || [],
       items: dedupe(items).slice(0, 6),
-      rootHref: root.href || null,
     };
   });
 }
@@ -84,43 +57,41 @@ function dedupe(items) {
   });
 }
 
-/* ============== Footer ============== */
-export default function CareersFooter() {
+export default function MediazioniFooter() {
   const year = new Date().getFullYear();
   const sections = buildSections(NAV).filter((s) => s.items.length > 0);
-  const areaRiservata = NAV.find((n) => n.external)?.href || "#";
+  const areaUtente = NAV.find((n) => n.external)?.href || "#";
 
   return (
     <footer className="relative mt-8 md:mt-12 bg-[var(--brand-dark)] text-sm text-white/80">
-      {/* Sfondo leggero, più basso */}
+      {/* Glow alto leggero */}
       <div className="pointer-events-none absolute inset-0 -z-10 opacity-50">
         <div className="absolute inset-x-0 top-0 h-24 md:h-28 bg-[radial-gradient(60%_60%_at_50%_0%,rgba(201,168,110,0.15),transparent_70%)]" />
       </div>
 
       <div className="container py-8 md:py-10">
-        {/* Top: Brand + colonne (CTA rimossa) */}
+        {/* Top: Brand + colonne */}
         <div className="grid gap-10 lg:grid-cols-[1.2fr_2fr]">
           {/* Brand/contatti */}
           <div>
             <div className="flex items-center gap-3">
               <div className="relative h-11 w-11 overflow-hidden rounded-xl ring-1 ring-[var(--gold)]/40">
-                {/* ICONA CORRETTA (allineata all’header) */}
                 <Image
                   src="/favicon.svg"
                   alt="Casa Corporation"
                   fill
                   className="object-contain p-1"
                   sizes="44px"
-                  priority={false}
                 />
               </div>
               <div className="text-lg font-semibold text-white">
-                Carriere <span className="text-gold">Casa Corporation</span>
+                Mediazioni <span className="text-gold">Casa Corporation</span>
               </div>
             </div>
 
             <p className="mt-3 max-w-md text-white/65">
-              Percorsi chiari, formazione continua, strumenti proprietari: entra in un team con obiettivi misurabili.
+              Vendi o affitta al meglio con metodo, marketing premium e strumenti digitali proprietari.
+              Trasparenza, tutela e KPI verificabili in ogni fase.
             </p>
 
             <div className="mt-5 space-y-2 text-white/80">
@@ -143,12 +114,12 @@ export default function CareersFooter() {
 
               <div className="pt-3">
                 <a
-                  href={areaRiservata}
+                  href={areaUtente}
                   target="_blank"
                   rel="noopener"
                   className="inline-flex items-center gap-1 rounded-lg border border-white/15 px-3 py-1.5 text-white/85 transition hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-white/20"
                 >
-                  Area Riservata <ExternalLink className="h-3.5 w-3.5" />
+                  Area Utente <ExternalLink className="h-3.5 w-3.5" />
                 </a>
               </div>
             </div>
@@ -165,8 +136,6 @@ export default function CareersFooter() {
                   {section.items.map((it) => (
                     <li key={`${section.title}-${it.label}`}>
                       <FooterLinkSmart
-                        sectionLabel={section.title}
-                        itemLabel={it.label}
                         href={it.href}
                         className="rounded-lg px-1 py-1 text-white/80 transition hover:text-white focus:outline-none focus:ring-2 focus:ring-white/15"
                       >
@@ -178,38 +147,26 @@ export default function CareersFooter() {
               </div>
             ))}
 
-            {/* Colonna extra: Link rapidi + Gara Live bloccata */}
+            {/* Colonna extra: Link rapidi */}
             <div>
               <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-white/60">
-                Link
+                Link rapidi
               </div>
               <ul className="grid gap-1">
-                {/* Bloccata localmente */}
-                <li>
-                  <FooterLinkSmart
-                    sectionLabel="Gara Aziendale"
-                    itemLabel="Gara (Live)"
-                    href="/carriere/gara-live"
-                    className="rounded-lg px-1 py-1"
-                  >
-                    Gara (Live)
-                  </FooterLinkSmart>
-                </li>
-
-                {NAV.filter((n) => !n.external && n.href)
-                  .slice(0, 4)
-                  .map((l) => (
-                    <li key={`quick-${l.label}`}>
-                      <FooterLinkSmart
-                        sectionLabel={l.label}
-                        itemLabel={l.label}
-                        href={l.href}
-                        className="rounded-lg px-1 py-1 text-white/80 transition hover:text-white focus:outline-none focus:ring-2 focus:ring-white/15"
-                      >
-                        {l.label}
-                      </FooterLinkSmart>
-                    </li>
-                  ))}
+                {[
+                  { label: "Affitto", href: "/affitto" },
+                  { label: "Vendita", href: "/vendita" },
+                  { label: "Valorizza", href: "/valorizza" },
+                ].map((l) => (
+                  <li key={`quick-${l.label}`}>
+                    <FooterLinkSmart
+                      href={l.href}
+                      className="rounded-lg px-1 py-1 text-white/80 transition hover:text-white focus:outline-none focus:ring-2 focus:ring-white/15"
+                    >
+                      {l.label}
+                    </FooterLinkSmart>
+                  </li>
+                ))}
 
                 <li>
                   <Link
@@ -232,7 +189,7 @@ export default function CareersFooter() {
           </nav>
         </div>
 
-        {/* Divider più stretto */}
+        {/* Divider */}
         <div className="my-6 h-px w-full bg-white/[0.08]" />
 
         {/* Bottom */}

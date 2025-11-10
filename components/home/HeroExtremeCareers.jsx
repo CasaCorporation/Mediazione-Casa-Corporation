@@ -28,7 +28,7 @@ export default function HeroExtremeMediazioni() {
         <div className="absolute inset-0 -z-10 flex items-center justify-center">
           <div className="relative w-full max-w-[1600px] h-[min(92svh,800px)]" aria-hidden>
             <Image
-              src="/mediazioni/hero.avif"   // se non presente, aggiungi il file o punta a /home/hero.avif
+              src="/home/hero.avif"   // se non presente, aggiungi il file o punta a /home/hero.avif
               alt=""
               fill
               priority
